@@ -1,0 +1,45 @@
+{
+  // Default formatter: Use the correct Prettier extension ID
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+
+  // Auto-format on save
+  "editor.formatOnSave": true,
+
+  // Auto-fix ESLint issues on save
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  },
+
+  // Use the project's own TypeScript version
+  "typescript.tsdk": "./node_modules/typescript/lib",
+  "typescript.enablePromptUseWorkspaceTsdk": true,
+
+  // Quick suggestions inside strings (great for Tailwind classes in JSX)
+  "editor.quickSuggestions": {
+    "other": true,
+    "comments": true,
+    "strings": true
+  },
+
+  // Enable inline suggestions (ghost text)
+  "editor.inlineSuggest.enabled": true,
+
+  // Treat CSS files as Tailwind for proper highlighting and IntelliSense
+  "files.associations": {
+    "*.css": "tailwindcss"
+  },
+
+  // Disable built-in CSS validation to avoid @tailwind warnings
+  "css.validate": false,
+
+  // Clean up files automatically
+  "files.trimTrailingWhitespace": true,
+  "files.insertFinalNewline": true,
+
+  // Code Runner settings (to avoid the earlier workspace error)
+  "code-runner.runInTerminal": true,
+  "code-runner.clearPreviousOutput": true,
+  "code-runner.ignoreSelection": true,
+  "code-runner.saveAllFilesBeforeRun": true,
+  "code-runner.saveFilesBeforeRun": true
+}
