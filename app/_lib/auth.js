@@ -12,28 +12,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   pages: {
     signIn: '/login',
   },
-  cookies: {
-    pkceCodeVerifier: {
-      name: '__Secure-authjs.pkce.code_verifier',
-      options: {
-        httpOnly: true,
-        sameSite: 'none', // Switch to 'none' + secure: true often resolves parsing/transmission failures
-        path: '/',
-        secure: true, // Force secure even in dev if testing thoroughly
-        maxAge: 900,
-      },
-    },
-    state: {
-      name: '__Secure-authjs.state',
-      options: {
-        httpOnly: true,
-        sameSite: 'none',
-        path: '/',
-        secure: true,
-        maxAge: 900,
-      },
-    },
-  },
+
   callbacks: {
     async authorized({ auth, request }) {
       return !!auth?.user;
