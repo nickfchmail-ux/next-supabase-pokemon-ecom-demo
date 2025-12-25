@@ -22,10 +22,15 @@ export default function PokemonDetailNavigationImage({ id, view }) {
           height={150}
           width={150}
           alt={name}
-          className="object-cover"
+          className="object-cover hover:bg-amber-50"
         />
       ) : (
-        <Image src={selectedPokemon.image} fill alt={name} className=" object-contain " />
+        <Image
+          src={selectedPokemon.image}
+          fill
+          alt={name}
+          className=" object-contain hover:bg-amber-50"
+        />
       )}
     </button>
   );

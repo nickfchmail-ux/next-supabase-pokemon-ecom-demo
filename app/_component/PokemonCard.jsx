@@ -31,11 +31,12 @@ function PokemonCard({ name, url, id, description, price }) {
           overflow-hidden
           sm:flex-row sm:h-52 sm:w-full
 
-          p-3
+          p-2
+      relative
 
           "
     >
-      <div className="relative  grid w-full sm:h-full sm:w-full place-items-center min-h-37.5 hover:bg-amber-50 relative">
+      <div className=" grid w-[300px] sm:h-full sm:w-[300px] place-items-center min-h-37.5 hover:bg-amber-50 ">
         {purchaseQuantity > 0 && <PurchaseQuantity id={id} />}
         <PokemonDetailNavigationImage id={id} />
       </div>
@@ -53,11 +54,11 @@ function PokemonCard({ name, url, id, description, price }) {
             "
       >
         <div className="flex flex-col justify-start items-baseline">
-          <h1 className="text-lg font-normal mb-0 text-gray-600 font-sans w-max">{name}</h1>
+          <h1 className="text-lg font-normal mb-0 text-gray-600 font-sans w-max ">{name}</h1>
           <span className="text-xs text-indigo-300 mt-0">by supplier</span>
         </div>
         <p className="text-xs text-gray-500 w-4/5 line-clamp-1">{description}</p>
-        <div className="w-full flex flex-wrap justify-between items-center md:flex-col lg:flex-row">
+        <div className="w-full flex flex-wrap justify-between items-center md:flex-col lg:flex-row relative">
           <Price price={price} />
           {!hasItemInCart && <AddToCartButton id={id} />}
           {hasItemInCart && <AmendCartQuanityButton id={id} />}

@@ -1,3 +1,4 @@
+import CalculateIcon from '@mui/icons-material/Calculate';
 import { useSelector } from 'react-redux';
 import useGetPokemon from '../_state/_remote/pokemon/useGetPokemon';
 export default function TotalCountPerItem({ id }) {
@@ -24,5 +25,14 @@ export default function TotalCountPerItem({ id }) {
 
   if (!id) return;
 
-  return <div className={`w-max`}>Total: ${formatedTotalPrice}</div>;
+  return (
+    <div
+      className={`w-max text-sm sm:text-sm md:text-sm space-x-1 text-gray-300 flex place-items-center`}
+    >
+      <div className={`items-center mb-1`}>
+        <CalculateIcon fontSize="5px" />
+      </div>
+      <div>${formatedTotalPrice}</div>
+    </div>
+  );
 }
