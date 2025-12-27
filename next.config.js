@@ -105,6 +105,15 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'wallpapers.com',
       },
+
+      {
+        protocol: 'https',
+        hostname: 'wallpapers.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'wallpapers.com',
+      },
     ],
     formats: ['image/avif', 'image/webp'],
   },
