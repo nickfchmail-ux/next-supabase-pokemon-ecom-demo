@@ -11,10 +11,8 @@ export default async function Page({ searchParams }) {
   const session = await auth();
 
   return (
-    <div className=" bg-amber-500 ">
-      <InfinitePokemonList species={params.species} user={session?.user}>
-        {cartFromDatabase}
-      </InfinitePokemonList>
-    </div>
+    <InfinitePokemonList species={params.species} user={session?.user}>
+      {cartFromDatabase}
+    </InfinitePokemonList>
   );
 }

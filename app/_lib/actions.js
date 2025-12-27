@@ -14,7 +14,7 @@ import {
 } from './data-service';
 
 export async function handleSignOut() {
-  await signOut();
+  await signOut({ redirectTo: '/' });
 }
 
 export async function handleSignIn() {

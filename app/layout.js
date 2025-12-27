@@ -1,11 +1,17 @@
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-import { Josefin_Sans } from 'next/font/google';
+import { Josefin_Sans, Nunito } from 'next/font/google';
 import Footer from './_component/Footer';
 import Nav from './_component/Nav';
 import Providers from './_component/Providers';
 import './globals.css';
 const josefin = Josefin_Sans({
   subsets: ['latin'],
+  display: 'swap',
+});
+
+const nunito = Nunito({
+  subsets: ['latin'],
+  weight: ['300', '400', '600', '700'], // Add weights you need
   display: 'swap',
 });
 
@@ -22,7 +28,9 @@ export const metadata = {
 export default async function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={`${josefin.className} flex flex-col bg-amber-200 min-h-screen`}>
+      <body
+        className={`${josefin.className} ${nunito.className} flex flex-col bg-amber-200 min-h-screen`}
+      >
         <Providers>
           <ReactQueryDevtools initialIsOpen={false} />
           <Nav />

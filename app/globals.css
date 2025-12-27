@@ -5,6 +5,11 @@
 @import "primeicons/primeicons.css";
 @custom-variant dark (&:is(.dark *));
 @import 'primeicons/primeicons.css';
+
+.font-nunito {
+  font-family: "Nunito", sans-serif;
+}
+
 @theme inline {
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);

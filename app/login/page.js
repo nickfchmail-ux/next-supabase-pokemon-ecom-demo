@@ -1,11 +1,8 @@
-import SignInButton from "../_component/SignInButton";
+import SignInView from '../_component/SignInView';
 export default function Page() {
   return (
-    <div className="h-full flex flex-col items-center justify-center space-y-6">
-      <div className="flex flex-col items-center gap-4">
-        <h1>Please sign in to continue shopping</h1>
-        <SignInButton />
-      </div>
+    <div className="h-[86vh] flex flex-col items-center justify-center space-y-6">
+      <SignInView />
     </div>
   );
 }
