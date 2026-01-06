@@ -9,5 +9,12 @@ export default function BackButton() {
     router.back();
   };
 
-  return <button onClick={handleBack}>Go Back</button>;
+  return (
+    <button
+      onClick={handleBack}
+      className={`bg-amber-400 py-2 px-4 rounded-2xl cursor-pointer hover:bg-amber-300 text-primary-300 active:-translate-y-1 hover:text-primary-200`}
+    >
+      Go Back
+    </button>
+  );
 }

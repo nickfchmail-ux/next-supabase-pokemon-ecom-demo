@@ -1,3 +1,5 @@
+'use client';
+
 import { useDispatch, useSelector } from 'react-redux';
 
 export default function PurchaseQuanity({ id, view }) {
@@ -6,10 +8,12 @@ export default function PurchaseQuanity({ id, view }) {
 
   const dispatch = useDispatch();
 
+  if (!purchaseQuantity) return null;
+
   return (
     <span className={`w-max ${view?.toLowerCase() !== 'cart' ? 'absolute top-2 left-2' : ''} `}>
       Qty.
-      <span>{purchaseQuantity}</span>
+      <span className={`text-blue-500`}> {purchaseQuantity}</span>
     </span>
   );
 }

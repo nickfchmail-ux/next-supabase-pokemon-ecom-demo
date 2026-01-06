@@ -1,9 +1,13 @@
 'use client';
 
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addToCart } from '../_state/_global/cart/CartSlice';
 export default function AddToCart({ id }) {
   const dispatch = useDispatch();
+  const hasAlreadyAddToCart =
+    useSelector((state) => state.cart.cart).filter((pokemon) => pokemon.id === id)?.length > 0;
+
+  if (hasAlreadyAddToCart) return null;
 
   return (
     <button

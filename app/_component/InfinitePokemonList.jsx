@@ -98,10 +98,10 @@ export default function InfinitePokemonList({ user, children }) {
   } = useMutation({
     mutationFn: updateCartItemsAction,
     onSuccess: (data) => {
-      console.log(data);
+
     },
     onError: (err) => {
-      console.error(err);
+
     },
   });
 

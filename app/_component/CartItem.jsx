@@ -14,21 +14,21 @@ export default function CartItem({ item, isInView, ref }) {
       className={`flex-1 bg-primary-300 flex m-2 drop-shadow-lg rounded-[15px]  min-w-[150px] md:flex-row flex-col md:flex-row p-1 md:p-5 h-full sm:h-[70vh] md:h-max`}
     >
       <div className={`flex-1 min-w-[100px] min-h-[100px]  relative flex-1 rounded-[15px] md:mr-5`}>
-        <PokemonDetailNavigationImage id={item.id} view={'cart'} />
+        <PokemonDetailNavigationImage id={item?.id} view={'cart'} />
       </div>
 
       <div
         className={`min-w-[40%] flex  my-5 space-y-2 justify-between mb-2 flex-col md:flex-row `}
       >
         <div>
-          <span className={`flex flex-col mb-2 w-full w-max text-2xl`}>{item.name}</span>
+          <span className={`flex flex-col mb-2 w-full w-max text-2xl`}>{item?.name}</span>
           <span className="flex gap-2 flex-wrap md:mb-5">
             {item.species.map((sp) => (
               <Image key={sp} src={`/${sp}.png`} height={50} width={50} alt={sp} />
             ))}
           </span>
           <div className={`md:mb-5`}>
-            <PurchaseQuanity id={item.id} view={'Cart'} />
+            <PurchaseQuanity id={item?.id} view={'Cart'} />
           </div>
         </div>
         <div
@@ -51,8 +51,8 @@ export default function CartItem({ item, isInView, ref }) {
             />
           </div>
           <div>
-            <TotalCountPerItem id={item.id} />
-            <AmendCartQuanityButton id={item.id} view={'mobile'} />
+            <TotalCountPerItem id={item?.id} />
+            <AmendCartQuanityButton id={item?.id} view={'mobile'} />
           </div>
         </div>
       </div>

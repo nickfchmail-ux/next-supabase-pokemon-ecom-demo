@@ -1,12 +1,42 @@
+'use client';
+
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   decrementQuantity,
   incrementQuantity,
   removeFromCart,
 } from '../_state/_global/cart/CartSlice';
+
+import { useMutation } from '@tanstack/react-query';
+import { useEffect, useState } from 'react';
+import { updateCartItemsAction } from '../_lib/actions';
+
 export default function AmendCartQuanityButton({ id, view }) {
+  const [hasDoneInitialCartUpdate, setHasDoneInitialCartUpdate] = useState(false); // Fixed typo
   const dispatch = useDispatch();
+
+  const cart = useSelector((state) => state.cart.cart);
+  const hasAlreadyAddToCart = cart.filter((pokemon) => pokemon.id === id).length > 0;
+
+  const {
+    mutate: updatePokemon,
+    isPending,
+    isError,
+    error: updateError,
+  } = useMutation({
+    mutationFn: updateCartItemsAction,
+    onSuccess: (data) => {},
+    onError: (err) => {},
+  });
+
+  useEffect(() => {
+    if (cart?.length >= 0) {
+      updatePokemon(cart);
+    }
+  }, [cart]); // Added dependency
+
+  if (!hasAlreadyAddToCart) return null;
 
   return (
     <div className={`flex gap-x-3 flex-wrap `}>

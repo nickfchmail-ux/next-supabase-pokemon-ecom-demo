@@ -72,6 +72,8 @@ export default function CartList({ cartData }) {
   const selectedPokemons = cart.map((selectedPokemon) =>
     pokemonList.filter((pokemon) => pokemon.id === selectedPokemon.id).at(0)
   );
+  console.log('cart: ', cart);
+  console.log('selected Pokemon: ', selectedPokemons);
 
   return (
     <div

@@ -7,6 +7,14 @@ function Text({ textArray }) {
 
   const showFullText = textArray.length < 2 || showText;
 
+  if (!textArray?.length > 0)
+    return (
+      <div className="flex flex-col space-y-2 items-start">
+        神秘的實可夢... 在數據庫找不到資料...
+      </div>
+    );
+
+
   return (
     <div className="flex flex-col space-y-2 items-start">
       {showFullText

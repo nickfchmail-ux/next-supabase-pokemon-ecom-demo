@@ -9,7 +9,7 @@ async function Nav() {
   const session = await auth();
 
   if (session) {
-    console.log('session', session);
+
     user = await getUserAction(session.user?.email);
   }
 

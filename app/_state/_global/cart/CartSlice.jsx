@@ -22,12 +22,12 @@ const cartSlice = createSlice({
       state.cart = state.cart.filter((item) => item.id !== action.payload.id);
     },
     incrementQuantity: (state, action) => {
-      console.log('trying to add sth');
+
       const item = state.cart.find((i) => i.id === action.payload.id);
       if (item) item.quantity = parseInt(item.quantity) + 1;
     },
     decrementQuantity: (state, action) => {
-      console.log('trying to decrease sth');
+
       const item = state.cart.find((i) => i.id === action.payload.id);
       if (item) {
         if (item.quantity > 1) {

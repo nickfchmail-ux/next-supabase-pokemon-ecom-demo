@@ -1,5 +1,8 @@
 import Image from 'next/image';
+import AddToCartButton from '../../_component/AddToCartButton';
+import AmendCartQuanityButton from '../../_component/AmendCartQuanityButton';
 import BackButton from '../../_component/BackButton';
+import PurchaseQuanity from '../../_component/PurchaseQuanity';
 import Text from '../../_component/Text';
 import { getPokemonById } from '../../_lib/data-service';
 export async function generateMetadata({ params }) {
@@ -16,26 +19,53 @@ export default async function Page({ params }) {
 
   const selectedPokemon = await getPokemonById(itemId);
 
-  const { image, name, descriptions } = selectedPokemon;
+  const { image, name, descriptions, species } = selectedPokemon;
 
   return (
     <>
-      <div className="bg-amber-300 flex min-h-[70vh]">
-        <div className="bg-amber-600 flex flex-1 relative items-center justify-center min-w-50 max-w-100">
+      <div className="bg-primary-700 flex flex-col md:flex-row min-h-[82.5vh] justify-center">
+        <div className="bg-primary-800 flex  flex-col items-center justify-center min-w-50 ">
+          <h1 className=" text-primary-50 p-2">{name}</h1>
+          <div className={`flex gap-2 flex-wrap justify-center w-full relative`}>
+            {species.map((spec) => (
+              <Image
+                src={`/${spec}.png`}
+                width={100}
+                height={10}
+                key={`${image}-detail-page`}
+                alt={name}
+              />
+            ))}
+          </div>
           <Image
             src={image}
             width={300}
             height={300}
-            className="object-cover aspect-square h-auto"
+            className="object-cover aspect-square mt-10"
             alt="image"
           />
-          <h1 className="absolute top-5 bg-amber-300 p-2">{name}</h1>
         </div>
-        <div className="">
-          <Text textArray={descriptions} />
+        <div
+          className={`flex flex-1 flex-col md:min-h-[82.5vh] space-y-5 text-primary-50 w-full p-5 justify-center `}
+        >
+          <div className="flex-1 flex flex-col justify-center ">
+            <h1 className={`my-5`}>Descriptions: </h1>
+            <Text textArray={descriptions} />
+
+            <div className={`mt-3`}>
+              <PurchaseQuanity id={selectedPokemon?.id} view={'cart'} />
+            </div>
+          </div>
+
+          <div className={`flex justify-between p-2 mt-auto    w-full`}>
+            <div>
+              <AddToCartButton id={selectedPokemon?.id} />
+              <AmendCartQuanityButton id={selectedPokemon?.id} alt={name} />
+            </div>
+            <BackButton />
+          </div>
         </div>
       </div>
-      <BackButton />
     </>
   );
 }
