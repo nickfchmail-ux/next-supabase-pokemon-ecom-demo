@@ -7,12 +7,14 @@ export default function NoCartItemsNotice() {
   const router = useRouter();
 
   return (
-    <div className="bg-amber-100 flex flex-col items-center justify-center w-full h-full  p-6">
+    <div className="bg-primary-800 flex flex-col items-center justify-center w-full h-full  p-6">
       <div className="text-center">
-        <h1 className="text-4xl font-bold text-amber-600 mb-4 max-w-md mx-auto">
+        <h1 className="text-4xl font-bold text-primary-100 mb-4 max-w-md mx-auto">
           Oops! Your cart is empty right now. Let's go shopping! 🛒✨
         </h1>
-        <p className="text-lg text-amber-800 mb-8">Discover amazing items waiting just for you.</p>
+        <p className="text-lg text-primary-100 mb-8">
+          Discover amazing items waiting just for you.
+        </p>
         <Button
           variant="contained"
           color="primary"

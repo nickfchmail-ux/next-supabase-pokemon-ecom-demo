@@ -54,12 +54,12 @@ const SideBar = ({ onClose }) => {
     ];
 
     return (
-      <List className="h-full flex flex-col " sx={{ width: 250 }} role="presentation">
+      <List className="h-full flex flex-col bg-primary-800" sx={{ width: 250 }} role="presentation">
         {navItems.map((item) => (
           <ListItem
             key={item.label}
             disablePadding
-            className={`${pathname === item.path ? 'bg-amber-300' : ''}`}
+            className={`${pathname === item.path ? 'bg-primary-200' : ''}`}
           >
             <ListItemButton>
               <Link

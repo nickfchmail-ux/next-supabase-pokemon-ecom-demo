@@ -11,7 +11,7 @@ export default function CartItem({ item, isInView, ref }) {
   return (
     <div
       ref={ref}
-      className={`flex-1 bg-white flex m-2 drop-shadow-lg rounded-[15px]  min-w-[150px] md:flex-row flex-col md:flex-row p-1 md:p-5 h-full sm:h-[70vh] md:h-max`}
+      className={`flex-1 bg-primary-300 flex m-2 drop-shadow-lg rounded-[15px]  min-w-[150px] md:flex-row flex-col md:flex-row p-1 md:p-5 h-full sm:h-[70vh] md:h-max`}
     >
       <div className={`flex-1 min-w-[100px] min-h-[100px]  relative flex-1 rounded-[15px] md:mr-5`}>
         <PokemonDetailNavigationImage id={item.id} view={'cart'} />

@@ -8,7 +8,7 @@ export default function CartView({ children }) {
 
   return (
     <div
-      className={`bg-yellow-200 flex flex-col ${hasCartItem ? 'md:grid md:grid-cols-[2fr_1fr] h-[80vh]  flex overflow-hidden' : ''} h-[86vh]`}
+      className={`bg-primary-400 flex flex-col ${hasCartItem ? 'md:grid md:grid-cols-[2fr_1fr] h-[80vh]  flex overflow-hidden' : ''} h-[86vh]`}
     >
       <CartList cartData={cartFromDatabase} />
 

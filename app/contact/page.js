@@ -48,7 +48,7 @@ export default function ContactPage() {
       whileInView="visible"
       viewport={{ once: true, amount: 0.2 }}
       variants={container}
-      className="min-h-screen bg-white py-16 sm:py-24"
+      className="h-[83vh] bg-white  py-2 overflow-y-auto"
     >
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mx-auto max-w-2xl text-center">

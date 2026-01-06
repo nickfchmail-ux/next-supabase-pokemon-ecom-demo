@@ -34,17 +34,17 @@ export default async function RootLayout({ children }) {
   return (
     <html lang="en">
       <body
-        className={`${josefin.className} ${nunito.className} flex flex-col bg-amber-200 min-h-screen`}
+        className={`${josefin.className} ${nunito.className} flex flex-col bg-primary-950 min-h-screen text-primary-600`}
       >
         <Providers>
           <ReactQueryDevtools initialIsOpen={false} />
           <Toaster />
           <Nav />
 
-          <main className="bg-amber-900 flex-1 ">
-            <div className="max-w-7xl mx-auto bg-blue-100 mt-2.5 max-w-[90vw]">{children}</div>
+          <main className="bg-primary-950 flex-1 ">
+            <div className="max-w-7xl mx-auto bg-primary-800 md:max-w-[90vw]">{children}</div>
           </main>
-          <div className={`flex sticky bottom-0 md:hidden justify-evenly bg-amber-300`}>
+          <div className={`flex sticky bottom-0 md:hidden justify-evenly bg-primary-800`}>
             <NavigationLink view={'mobile'} user={session?.user} />
           </div>
           <Footer />

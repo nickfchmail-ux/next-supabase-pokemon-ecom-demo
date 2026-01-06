@@ -14,7 +14,7 @@ const nunito = Nunito({
 
 export default function AboutPage() {
   return (
-    <div className="min-h-screen text-gray-800 overflow-hidden">
+    <div className="min-h-screen text-primary-50 overflow-hidden">
       {/* Hero with subtle image background */}
       <motion.section
         initial={{ opacity: 0 }}
@@ -50,7 +50,7 @@ export default function AboutPage() {
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{ type: 'spring', delay: 0.5 }}
-            className="text-5xl md:text-7xl font-bold mb-6 text-blue-900"
+            className="text-5xl md:text-7xl font-bold mb-6 text-primary-50"
           >
             Welcome to Pokémon World
           </motion.h1>
@@ -58,7 +58,7 @@ export default function AboutPage() {
             initial={{ y: 40, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.8 }}
-            className="text-2xl mb-10 text-gray-700 max-w-xl mx-auto font-nunito"
+            className="text-2xl mb-10 text-primary-50 max-w-xl mx-auto font-nunito"
           >
             Authentic plush toys (公仔), figures, and collectibles from the official Pokémon Center.
           </motion.p>
@@ -80,7 +80,7 @@ export default function AboutPage() {
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="relative max-w-4xl mx-auto bg-white/80 rounded-3xl p-12 shadow-xl backdrop-blur-sm"
+          className="relative max-w-4xl mx-auto bg-white/80 rounded-3xl p-12 shadow-xl backdrop-blur-sm overflow-hidden"
         >
           <Image
             src="/bg-blue.jpg"
@@ -89,8 +89,8 @@ export default function AboutPage() {
             className="object-cover opacity-30 -z-10"
             priority
           />
-          <h2 className="text-4xl font-bold mb-6 text-blue-800 text-center">Our Story</h2>
-          <p className="text-lg text-gray-700 text-center">
+          <h2 className="text-4xl font-bold mb-6 text-primary-900 text-center">Our Story</h2>
+          <p className="text-lg text-primary-900 text-center">
             Born from a love of Pokémon, we curate genuine plush dolls and figures for fans
             everywhere.
           </p>
@@ -112,8 +112,8 @@ export default function AboutPage() {
           viewport={{ once: true }}
           className="max-w-4xl mx-auto bg-white/80 rounded-3xl p-12 shadow-xl backdrop-blur-sm"
         >
-          <h2 className="text-4xl font-bold mb-8 text-blue-800 text-center">Our Mission</h2>
-          <p className="text-lg text-center text-gray-700 mb-10">
+          <h2 className="text-4xl font-bold mb-8 text-primary-900 text-center">Our Mission</h2>
+          <p className="text-lg text-center text-primary-900 mb-10">
             Deliver premium, licensed products that spark joy and adventure.
           </p>
           <div className="grid md:grid-cols-3 gap-8">
@@ -130,7 +130,7 @@ export default function AboutPage() {
                 whileHover={{ scale: 1.1, y: -10 }}
                 className="bg-blue-100 rounded-2xl p-6 text-center shadow-lg"
               >
-                <h3 className="text-xl font-bold text-blue-900">{item.split('\n')[0]}</h3>
+                <h3 className="text-xl font-bold text-primary-600">{item.split('\n')[0]}</h3>
                 <p className="text-gray-700">{item.split('\n')[1]}</p>
               </motion.div>
             ))}
@@ -150,7 +150,7 @@ export default function AboutPage() {
         <motion.h2
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
-          className="text-5xl font-bold mb-16 text-center text-blue-800"
+          className="text-5xl font-bold mb-16 text-center text-primary-50"
         >
           Featured Collectibles
         </motion.h2>
@@ -191,15 +191,17 @@ export default function AboutPage() {
           priority
         />
         <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }}>
-          <h2 className="text-4xl font-bold mb-6 text-blue-900">Start Your Collection</h2>
-          <p className="text-xl mb-8 text-gray-700">
+          <h2 className="text-4xl font-bold mb-6 text-primary-50">Start Your Collection</h2>
+          <p className="text-xl mb-8 text-primary-5">
             Authentic pieces that bring Pokémon magic to life.
           </p>
           <motion.button
             whileHover={{ scale: 1.2 }}
             className="bg-yellow-400 text-gray-900 px-12 py-6 rounded-full text-2xl font-bold shadow-2xl hover:bg-yellow-300 z-10"
           >
-            <Link href={'/shop'}>Shop Now</Link>
+            <Link href={'/shop'} className={`text-primary-50`}>
+              Shop Now
+            </Link>
           </motion.button>
         </motion.div>
       </section>

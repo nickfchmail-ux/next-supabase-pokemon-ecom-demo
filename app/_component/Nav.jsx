@@ -14,7 +14,7 @@ async function Nav() {
   }
 
   return (
-    <nav className="h-min border-b border-b-amber-600">
+    <nav className="h-min border-b border-b-primary-400">
       <div className="flex items-center  max-w-7xl mx-auto justify-between">
         <Logo />
         <ul className="flex items-center gap-6 p-4">
