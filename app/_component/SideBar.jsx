@@ -68,7 +68,7 @@ const SideBar = ({ onClose }) => {
                 onClick={onClose}
               >
                 <ListItemIcon>{item.icon}</ListItemIcon>
-                <ListItemText primary={item.label} />
+                <ListItemText primary={item.label} className={`text-primary-100`} />
               </Link>
             </ListItemButton>
           </ListItem>
