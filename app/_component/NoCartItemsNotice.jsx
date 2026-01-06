@@ -7,7 +7,7 @@ export default function NoCartItemsNotice() {
   const router = useRouter();
 
   return (
-    <div className="bg-primary-800 flex flex-col items-center justify-center w-full h-full  p-6">
+    <div className="bg-primary-600 flex flex-col items-center justify-center w-full min-h-[86vh] p-6">
       <div className="text-center">
         <h1 className="text-4xl font-bold text-primary-100 mb-4 max-w-md mx-auto">
           Oops! Your cart is empty right now. Let's go shopping! 🛒✨
