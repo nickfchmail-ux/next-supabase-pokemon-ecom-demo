@@ -176,7 +176,7 @@ export default function ContactPage() {
               </p>
             )}
 
-            <form onSubmit={handleSubmit} className="mt-8 space-y-6">
+            <form onSubmit={handleSubmit} className="mt-8 space-y-6 text-black">
               <div>
                 <label htmlFor="name" className="block text-sm font-medium text-gray-700">
                   Name
