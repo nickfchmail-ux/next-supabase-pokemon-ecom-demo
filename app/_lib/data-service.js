@@ -263,7 +263,7 @@ export async function updatePaymentStatus({ orderId, billingAddress, paymentStat
 
     if (error) throw new Error(error.message);
   }
-  // Add more cases later (e.g., failed payments)
+
 }
 
 export async function getOrderItemsByOrderId(orderId) {
@@ -320,4 +320,19 @@ export async function calculateBillingAmount(orderedItems) {
   );
 
   return billingAmount;
+}
+
+export async function clearAllCartItems(userId) {
+  console.log('trying to clear all the cart items for the user: ', userId);
+
+  if (!userId) return;
+
+  const { data, error } = await supabase.from('cart_items').delete().eq('member_id', userId);
+
+  if (error) {
+    console.error('Supabase delete error:', error);
+    throw new Error(error.message || 'Failed to delete cart item');
+  }
+
+  return data;
 }

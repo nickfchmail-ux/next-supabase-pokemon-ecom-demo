@@ -8,9 +8,7 @@ import {
   removeFromCart,
 } from '../_state/_global/cart/CartSlice';
 
-import { useMutation } from '@tanstack/react-query';
-import { useEffect, useState } from 'react';
-import { updateCartItemsAction } from '../_lib/actions';
+import { useState } from 'react';
 
 export default function AmendCartQuanityButton({ id, view }) {
   const [hasDoneInitialCartUpdate, setHasDoneInitialCartUpdate] = useState(false); // Fixed typo
@@ -18,23 +16,6 @@ export default function AmendCartQuanityButton({ id, view }) {
 
   const cart = useSelector((state) => state.cart.cart);
   const hasAlreadyAddToCart = cart.filter((pokemon) => pokemon.id === id).length > 0;
-
-  const {
-    mutate: updatePokemon,
-    isPending,
-    isError,
-    error: updateError,
-  } = useMutation({
-    mutationFn: updateCartItemsAction,
-    onSuccess: (data) => {},
-    onError: (err) => {},
-  });
-
-  useEffect(() => {
-    if (cart?.length >= 0) {
-      updatePokemon(cart);
-    }
-  }, [cart]); // Added dependency
 
   if (!hasAlreadyAddToCart) return null;
 

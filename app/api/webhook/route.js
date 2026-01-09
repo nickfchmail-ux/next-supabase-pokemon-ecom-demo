@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import Stripe from 'stripe';
-import { updatePaymentStatus } from '../../_lib/data-service';
+import { clearAllCartItems, updatePaymentStatus } from '../../_lib/data-service';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY ?? '');
 
@@ -18,7 +18,7 @@ export async function POST(req) {
       case 'payment_intent.succeeded': {
         const paymentIntent = event.data.object;
 
-        const { orderId } = paymentIntent.metadata;
+        const { userId, orderId } = paymentIntent.metadata;
 
         if (!orderId) {
           console.error('Missing orderId');
@@ -36,7 +36,7 @@ export async function POST(req) {
 
         // Your existing status update
         await updatePaymentStatus({ orderId, billingAddress, paymentStatus: event.type });
-
+        await clearAllCartItems(userId);
         break;
       }
     }

@@ -10,7 +10,6 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { createOrderAction } from '../_lib/actions';
-import { clearCart } from '../_state/_global/cart/CartSlice';
 import useGetPokemon from '../_state/_remote/pokemon/useGetPokemon';
 import Loading from '../loading';
 import ClearCartButton from './ClearCartButton';
@@ -48,7 +47,7 @@ export default function CartSummary({ user }) {
 
   const {
     mutateAsync: createOrder,
-    isLoading,
+    isLoading: isLoadingStripePayment,
     isError,
     error,
   } = useMutation({
@@ -60,7 +59,7 @@ export default function CartSummary({ user }) {
       const params = new URLSearchParams();
 
       params.set('orderId', data.orderId);
-      dispatch(clearCart());
+
       router.push(`/checkout?${params.toString()}`);
     },
   });
@@ -108,6 +107,8 @@ export default function CartSummary({ user }) {
 
     createOrder({ orderedItems: cartItems });
   };
+
+  if (isLoadingStripePayment) return <Loading />;
 
   return (
     <div className="w-full h-min md:h-full bg-gray-50 shadow-lg px-6 flex items-center items-end">

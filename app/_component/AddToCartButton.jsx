@@ -4,9 +4,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addToCart } from '../_state/_global/cart/CartSlice';
 
 
-import { useMutation } from '@tanstack/react-query';
-import { useEffect } from 'react';
-import { updateCartItemsAction } from '../_lib/actions';
 
 export default function AddToCart({ id, view }) {
   const dispatch = useDispatch();
@@ -14,23 +11,6 @@ export default function AddToCart({ id, view }) {
     useSelector((state) => state.cart.cart).filter((pokemon) => pokemon.id === id)?.length > 0;
   const cart = useSelector((state) => state.cart.cart);
   if (hasAlreadyAddToCart) return null;
-
-  const {
-    mutate: updatePokemon,
-    isPending,
-    isError,
-    error: updateError,
-  } = useMutation({
-    mutationFn: updateCartItemsAction,
-    onSuccess: (data) => {},
-    onError: (err) => {},
-  });
-
-  useEffect(() => {
-    if (cart?.length >= 0) {
-      updatePokemon(cart);
-    }
-  }, [cart]); // Added dependency
 
   return (
     <button
