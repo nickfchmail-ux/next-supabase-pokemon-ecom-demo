@@ -44,6 +44,6 @@ Nowsday, AI could really build amazing pages within a minute with just a few pro
 1. Tailwind CSS -
 Tailwind CSS offers css patterns for developer to quickly adopt a common UI. The cool thing is that this applies to responsive layout display with mobile first media approach. I figured out it is very easy to set mobile UI with just "md:____" and it will make your layout adaptive to mobile screen.
 
-![alt text](image.png) ![alt text](image-1.png)
+![alt text](image.png)
 
 
