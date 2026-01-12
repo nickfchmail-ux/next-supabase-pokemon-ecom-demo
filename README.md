@@ -1,6 +1,6 @@
 Deployment to Vercel: https://next-pokemon-ecom-demo.vercel.app/
 
- This is an ecommerce project developed with NEXT.js, a react framework that links frontend and backend all together,  which makes building a website far more easier than before. The ecommerce store is called Poke 芒. The main reason pokemon is chosen as products because all the data are coming from open souroce API (Application Programming Interface), so it can save time.
+ This is an ecommerce project developed with NEXT.js, a react framework that links frontend and backend all together,  which makes building a website far more easier than before. The ecommerce store is called Poke 芒. The main reason pokemon is chosen as products because all the data are coming from open source API (Application Programming Interface), so it can save time.
 
  Around 70% of code is written by hand, and the rest is written by AI. The react APIs that are used in this project includes StanStack Query, Redux for remote and global state integration accross different pages.
 
