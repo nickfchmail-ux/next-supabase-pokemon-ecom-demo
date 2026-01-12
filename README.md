@@ -1,4 +1,4 @@
-Deployment to Vercel: https://next-pokemon-ecom-demo.vercel.app/
+Ecommerce store - Poke 芒
 
  This is an ecommerce project developed with NEXT.js, a react framework that links frontend and backend all together,  which makes building a website far more easier than before. The ecommerce store is called Poke 芒. The main reason pokemon is chosen as products because all the data are coming from open source API (Application Programming Interface), so it can save time.
 
@@ -46,4 +46,4 @@ Tailwind CSS offers css patterns for developer to quickly adopt a common UI. The
 
 ![alt text](image.png)
 
-
+Deployment to Vercel: https://next-pokemon-ecom-demo.vercel.app/
