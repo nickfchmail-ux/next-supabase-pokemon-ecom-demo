@@ -16,7 +16,7 @@ Deployment to Vercel: https://next-pokemon-ecom-demo.vercel.app/
  The feature was suggested by the AI (grok), during which i interacted with and in the meanwhile asking AI for help, and fixed the problem until the wee hours.
 
 2. __User Profile__ -
-The TanStack Query help to handle user request only from the frontend, and give developer access to pending state when the POST request is submitted to the server. It is a convenience way to show a spinner UI and provide a good user experience during waiting for server's response.
+The TanStack Query help to handle user request only from the frontend, and give developer access to pending state when the POST request is submitted to the server. It is a convenience way to show a spinner UI and provide a good user experience when waiting for server's response.
 
 ![alt text](image-4.png)
 
