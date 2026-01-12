@@ -60,7 +60,7 @@ export default function AboutPage() {
             transition={{ delay: 0.8 }}
             className="text-2xl mb-10 text-primary-50 max-w-xl mx-auto font-nunito"
           >
-            Authentic plush toys (公仔), figures, and collectibles from the official Pokémon Center.
+            Authentic plush toys, figures (公仔), and collectibles from the official Pokémon Center.
           </motion.p>
           <motion.button
             whileHover={{ scale: 1.2, rotate: 3 }}
