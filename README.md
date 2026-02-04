@@ -43,7 +43,7 @@ The main challenge for the feature is the authentication and authorization part,
 
 
 6. __User live tracking__
-this is a chotbox feature enhencement, designed to track number of users currently using chatbox. When doing business, customer stream could properly bring in oppertunities, and customer stream itself could also attract more visitors to our store. Hence, i think it is a good idea to make it visible to the ecom store so as to take care of business needs. Supabase's realtime feature moves a lot of heavy lifting, but the real challenge is that the update requires at least one user on the page, if the last user leaves the web, there would be always 1 remain visitors. After thinking a lot, i implement a work arround strategy to only show the feature when there is at > 1 visitor, and it works just fine.
+this is a chotbox feature enhencement, designed to track a number of users currently using our chatbox. When doing business, customer stream could properly bring in oppertunities and customer stream itself, could also attract more visitors to come. Hence, why not make it visible to the ecom store so as to take care of todays business needs? Supabase's realtime feature moves a lot of heavy lifting, but the real challenge is that the update requires at least one user on the page, if the last user leaves the web, there would be always 1 remaining visitor in database. After thinking a lot, i implement a work arround strategy to only show the feature when there is at > 1 visitor and hopefully, it works just fine.
 
 ![alt text](image-9.png)
 ![alt text](image-10.png)
