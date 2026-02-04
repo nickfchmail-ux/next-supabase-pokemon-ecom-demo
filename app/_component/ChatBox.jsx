@@ -1,7 +1,9 @@
 'use client';
 import { useQuery } from '@tanstack/react-query';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { retriveRoomRecord } from "../_lib/socket-service";
+import { setChatRoomId } from "../_state/_global/user/userSlice";
 import ChatWindow from './ChatWindow';
 export default function ChatBox() {
   const [expandChatBox, setExpandChatBox] = useState(false);
@@ -19,6 +21,13 @@ const [onMouseOver, setOnMouseOver] = useState(false);
     }
 
   })
+
+  const dispatch = useDispatch()
+  useEffect(()=>{
+    dispatch(setChatRoomId(roomId))
+
+
+  },[roomId])
 
 
 

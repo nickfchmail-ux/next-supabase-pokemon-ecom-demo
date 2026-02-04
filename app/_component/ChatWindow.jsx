@@ -2,23 +2,40 @@
 
 import { createClient } from '@supabase/supabase-js';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { useEffect, useRef, useState } from 'react';
-import { loadRoomMessages, uploadMessage } from '../_lib/socket-service';
+import { useEffect, useRef, useState, useTransition } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { loadRoomMessages, updateVisitorInOutFlow, uploadMessage } from '../_lib/socket-service';
+
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL,
   process.env.NEXT_PUBLIC_SUPABASE_KEY
 );
 
 export default function ChatWindow({ header, open, cancelChat, onMouseOver, roomId }) {
+  const dispatch = useDispatch();
+  const [isPending, startTransition] = useTransition();
+  const prevMessagesLength = useRef(0);
+  const [anonymousUser, setAnonymousUser] = useState(0);
+  const [loggedInUser, setLoggedInUser] = useState(0);
   const uuid = crypto.randomUUID();
   const queryClient = useQueryClient();
-  const scrollRef = useRef(null);
+  const bottomRef = useRef(null);
   const clientId = useRef(null);
   // Add roomId prop if needed
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
   const currentChannel = useRef(null);
-  const { data, isPending } = useQuery({
+
+  const user = useSelector((state) => state.user.user);
+  const room = useSelector((state) => state.user.chatRoomId);
+
+  const handleVisitorUpdate = (obj) => {
+    startTransition(async () => {
+      await updateVisitorInOutFlow(obj);
+    });
+  };
+
+  const { data, isPending: isSettingMessages } = useQuery({
     queryKey: ['roomMessages'],
     enabled: open && !!roomId,
     queryFn: () => loadRoomMessages({ roomId }),
@@ -34,30 +51,30 @@ export default function ChatWindow({ header, open, cancelChat, onMouseOver, room
   } = useMutation({
     mutationFn: (newMsg) => uploadMessage(newMsg),
     onSuccess: (data) => {
+      console.log('successfull uploaded: ', data);
       queryClient.invalidateQueries({ queryKey: ['roomMessages'] });
     },
     onError: (error) => {},
   });
 
   useEffect(() => {
-    if (!roomId?.length > 0 && !clientId.current) {
+    if (!user && !room) {
       clientId.current = crypto.randomUUID();
-      console.log('Generated persistent client ID:', clientId.current); // for debugging
     }
   }, [roomId]); // runs when roomId changes (or on mount)
 
   useEffect(() => {
-    if (isPending) return;
-
-    setMessages(data ?? []);
+    if (isSettingMessages) return;
+    const sortByTime = data.sort((a, b) => new Date(a.created_at) - new Date(b.created_at));
+    setMessages(sortByTime ?? []);
   }, [isPending]);
 
-  const filterString = `room_id=eq.${roomId}`;
+  const filterString = `room_id=eq.${room}`;
 
   // Realtime subscription
   useEffect(() => {
-    const channelName = roomId ? `room-${roomId}` : 'visitor-broadcast';
-    const channel = supabase.channel(channelName, {
+    const channelName = !!room ? `room-${room}` : 'visitor-broadcast';
+    let channel = supabase.channel(channelName, {
       config: {
         broadcast: {
           self: true, // Temporarily enable to test receiving (even own messages will log)
@@ -65,47 +82,73 @@ export default function ChatWindow({ header, open, cancelChat, onMouseOver, room
         },
       },
     });
+    // current users in chat room
+    channel.on('presence', { event: 'sync' }, () => {
+      const state = channel.presenceState();
+      const count = Object.keys(state).length;
 
-    if (roomId?.length > 0) {
+      if (user) {
+        setLoggedInUser(count);
+        handleVisitorUpdate({ loggedIn: count });
+      } else {
+        setAnonymousUser(count);
+        handleVisitorUpdate({ anonymous: count });
+      }
+    });
+
+    if (!!(user && room)) {
       channel.on(
         'postgres_changes',
         {
-          event: '*', // 'INSERT' only; use '*' for all changes
+          event: 'INSERT', // 'INSERT' only; use '*' for all changes
           schema: 'public',
           table: 'messages',
           filter: filterString,
         },
         (payload) => {
-          console.log('Received INSERT for room', roomId, payload.new);
           setMessages((prev) => [...prev, payload.new]); // payload.new = the full row
         }
       );
     } else {
       channel.on('broadcast', { event: 'new_message' }, (payload) => {
-        console.log(payload);
         const msg = payload.payload;
-        console.log(msg.client_id, uuid);
+
         if (msg.client_id === clientId.current) return; // Ignore own echo
 
         setMessages((prev) => [...prev, msg]);
       });
     }
 
-    channel.subscribe((status) => {
-      console.log('Subscription status:', status);
+    // Single subscribe + track presence
+    channel.subscribe(async (status) => {
+      if (status === 'SUBSCRIBED') {
+        await channel.track({ online: true });
+      }
+      console.log('channel status:', status);
     });
 
     currentChannel.current = channel;
     return () => {
+      currentChannel.current?.untrack();
       supabase.removeChannel(channel);
     };
-  }, [roomId]);
+  }, [user, room]);
 
   useEffect(() => {
-    if (scrollRef.current) {
-      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
-    }
-  }, [messages]); // Run every time messages change
+    const container = bottomRef.current;
+    if (!container) return;
+
+    const wasInitial = prevMessagesLength.current <= 0;
+
+    const behavior = wasInitial ? 'auto' : 'smooth';
+
+    container.scrollTo({
+      top: container.scrollHeight,
+      behavior,
+    });
+
+    prevMessagesLength.current = messages.length;
+  }, [messages]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -113,11 +156,12 @@ export default function ChatWindow({ header, open, cancelChat, onMouseOver, room
 
     let newMsg;
 
-    if (roomId?.length > 0) {
+    if (room && user) {
       newMsg = {
         room_id: roomId,
         content: input,
       };
+      sendMessage(newMsg);
     } else {
       const timestamp = Date.now();
       newMsg = {
@@ -125,23 +169,22 @@ export default function ChatWindow({ header, open, cancelChat, onMouseOver, room
         timestamp,
         client_id: clientId.current,
       };
-    }
 
-    setMessages((prev) => [...prev, newMsg]);
-
-    try {
-      await currentChannel.current.send({
-        type: 'broadcast',
-        event: 'new_message',
-        payload: newMsg,
-      });
-    } catch (err) {
-      console.log(err);
+      try {
+        await currentChannel.current.send({
+          type: 'broadcast',
+          event: 'new_message',
+          payload: newMsg,
+        });
+        setMessages((prev) => [...prev, newMsg]);
+      } catch (err) {
+        console.log(err);
+      }
     }
 
     setInput('');
   };
-
+  const isLoggedInMode = !!(user && roomId);
   return (
     <form
       onSubmit={handleSubmit}
@@ -154,40 +197,43 @@ export default function ChatWindow({ header, open, cancelChat, onMouseOver, room
       </h1>
 
       <div
-        ref={scrollRef}
+        ref={bottomRef}
         className={`overflow-y-auto border-t border-primary-500 flex-1 p-2 ${onMouseOver ? 'text-primary-600' : 'text-primary-900'}`}
       >
         {isPending
           ? 'Loading messages...'
           : messages?.map((msg, i) => {
-              console.log('own id: ', clientId.current);
+              const isOwnMessage = isLoggedInMode
+                ? msg.user_id === user?.id
+                : clientId.current === msg.client_id;
 
-              const isOwnMessage = clientId.current === msg.client_id;
+              const senderLabel = isLoggedInMode
+                ? msg.profile?.name || msg.user?.name || 'User' // adjust to your actual data shape
+                : msg.client_id?.slice(-3) || '???';
 
               return (
                 <div
-                  key={msg.id ?? msg.timestamp ?? `fallback-${i}`}
-                  className={`flex ${isOwnMessage ? 'justify-end' : ''}`}
+                  key={msg.id ?? msg.timestamp ?? msg.created_at ?? `msg-${i}`}
+                  className={`flex ${isOwnMessage ? 'justify-end' : 'justify-start'} mb-2`}
                 >
-                  <li
-                    key={i}
-                    className={` rounded text-[10px] ${isOwnMessage ? 'bg-green-200' : 'bg-amber-100'} flex self-end w-max list-none rounded-[5px] overflow-hidden mb-1 `}
+                  <div
+                    className={`
+          max-w-[75%] w-fit rounded-lg px-3 py-2 text-sm
+          ${isOwnMessage ? 'bg-green-200' : 'bg-amber-100'}
+        `}
                   >
-                    {!isOwnMessage ? (
-                      <div className="h-full w-full">
-                        <li className="flex gap-1 bg-amber-200 h-min w-full px-2 py-1">
-                          <img src={'/trianerIcon.png'} className="h-3 w-3 " />
-                          {msg.client_id.slice(-3)} :
-                        </li>
-                        <li className={`px-2 py-1`}>{msg.content}</li>
+                    {!isOwnMessage && (
+                      <div className="flex items-center gap-1 mb-1 opacity-75">
+                        <img src="/trianerIcon.png" alt="" className="h-4 w-4" />
+                        <span className="text-xs">{senderLabel}:</span>
                       </div>
-                    ) : (
-                      <li className={`px-2 py-1`}>{msg.content}</li>
                     )}
-                  </li>
+                    <div className="break-all whitespace-pre-wrap">{msg.content}</div>
+                  </div>
                 </div>
               );
             })}
+        <div ref={bottomRef} />
       </div>
 
       <div className="flex flex-col mt-auto">

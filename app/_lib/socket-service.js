@@ -15,78 +15,13 @@ export async function loadRoomMessages({ roomName = 'General Room', roomId }) {
     return [];
   }
 
-  // Step 1: Find room by id (if provided) or by name
-  let query = supabaseAdmin.from('rooms').select('id');
-
-  if (roomId) {
-    query = query.eq('id', roomId);
-  } else {
-    query = query.eq('name', roomName);
-  }
-
-  let { data: rooms, error: findError } = await query;
-
-  if (findError) throw findError;
-
-  let room;
-
-  // Step 2: If not found and no roomId was given → create it
-  if (!rooms?.length) {
-    if (roomId) {
-      throw new Error('Room not found');
-    }
-
-    // Assume unique constraint on rooms(name). If concurrent creates happen,
-    // one will succeed, others will hit 23505 and we re-query.
-    const { data: newRoom, error: insertError } = await supabaseAdmin
-      .from('rooms')
-      .insert({ name: roomName, creator_id: session.user.id })
-      .select('id');
-
-    if (insertError) {
-      if (insertError.code === '23505') {
-        // Another request created it — fetch it
-        const { data: fallbackRooms } = await supabaseAdmin
-          .from('rooms')
-          .select('id')
-          .eq('name', roomName);
-        room = fallbackRooms?.[0];
-        console.log('Room created concurrently — using existing:', room?.id);
-      } else {
-        throw insertError;
-      }
-    } else {
-      room = newRoom?.[0];
-      console.log('New room created:', room?.id);
-    }
-  } else {
-    room = rooms[0];
-    console.log('Existing room found:', room.id);
-  }
-
-  if (!room?.id) {
-    throw new Error('Failed to resolve room');
-  }
-
-  // Step 3: Ensure user is a member (idempotent insert)
-  const { error: memberError } = await supabaseAdmin
-    .from('room_members')
-    .insert({ room_id: room.id, user_id: session.user.id });
-
-  if (memberError) {
-    if (memberError.code === '23505') {
-      console.log('User already a member — ignoring duplicate');
-    } else {
-      throw memberError;
-    }
-  }
-
   // Step 4: Load messages
   const { data: messages, error: msgError } = await supabaseAdmin
     .from('messages')
     .select('*')
-    .eq('room_id', room.id)
-    .order('created_at', { ascending: true });
+    .eq('room_id', roomId)
+    .order('created_at', { ascending: false })
+    .limit(20);
 
   if (msgError) throw msgError;
 
@@ -139,12 +74,31 @@ export async function retriveRoomRecord() {
   const { data: room, error } = await supabaseAdmin
     .from('rooms')
     .select('*')
-    .eq('creator_id', session.user.id)
     .eq('name', 'General Room');
 
   return room?.[0].id || null;
 }
 
-export async function returnVisitorSays(payload) {
-  return payload;
+export async function updateVisitorInOutFlow({ loggedIn, anonymous }) {
+  const updateData = {};
+
+  if (loggedIn !== undefined) {
+    updateData.logged_in = loggedIn;
+  }
+
+  if (anonymous !== undefined) {
+    updateData.anonymous = anonymous;
+  }
+
+  const { data, error } = await supabaseAdmin
+    .from('live_visitors')
+    .update(updateData)
+    .eq('id', 1)
+    .select();
+
+  if (error) {
+    throw new Error("error updating visitor's data: " + error.message);
+  }
+
+  return data;
 }

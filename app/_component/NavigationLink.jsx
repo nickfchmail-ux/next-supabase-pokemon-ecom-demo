@@ -4,13 +4,22 @@ import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import QuestionMarkIcon from '@mui/icons-material/QuestionMark';
 import ShoppingCartCheckoutIcon from '@mui/icons-material/ShoppingCartCheckout';
 import StorefrontIcon from '@mui/icons-material/Storefront';
+import { useEffect } from 'react';
 import { CiShop } from 'react-icons/ci';
 import { IoHomeOutline } from 'react-icons/io5';
 import { LiaUserCogSolid } from 'react-icons/lia';
+import { useDispatch } from 'react-redux';
+import { setUser } from '../_state/_global/user/userSlice';
 import { Modal, Open, Window } from './Modal';
 import NavOption from './NavOption';
 import SideBar from './SideBar';
 function NavigationLink({ view, onClose, user }) {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    if (user) {
+      dispatch(setUser(user));
+    }
+  }, [user, dispatch]);
   const navigation = [
     { path: '/', label: { computer: 'Home', mobile: <IoHomeOutline size="25px" /> } },
     { path: '/about', label: { computer: 'About', mobile: <QuestionMarkIcon /> } },
@@ -38,6 +47,7 @@ function NavigationLink({ view, onClose, user }) {
       },
     },
   ];
+
   return (
     <>
       {navigation.map((link, index) => {

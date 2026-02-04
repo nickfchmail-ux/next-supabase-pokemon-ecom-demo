@@ -13,7 +13,7 @@ export async function GET(req) {
 
     await io.use(async (socket, next) => {
       const token = socket.handshake.auth.token;
-      console.log('user is trying to connect with token: ', token);
+
       if (!token) return next(new Error('Unauthorized'));
 
       try {
@@ -27,11 +27,11 @@ export async function GET(req) {
     });
 
     io.on('connection', (socket) => {
-      console.log('Client connected:', socket.data.userId);
+
       io.emit('connected', { message: 'Welcome!' });
 
       socket.on('new_message', (data) => {
-        console.log('Received message:', data);
+
 
         // Re-broadcast to all connected clients
         io.emit('new_message', data);
