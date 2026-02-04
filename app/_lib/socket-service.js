@@ -39,18 +39,6 @@ export async function uploadMessage(payload) {
     throw new Error('Missing room_id in payload');
   }
 
-  // Security: verify membership
-  const { data: members, error: checkError } = await supabaseAdmin
-    .from('room_members')
-    .select('user_id')
-    .eq('room_id', payload.room_id)
-    .eq('user_id', session.user.id)
-    .maybeSingle();
-
-  if (checkError) throw checkError;
-  if (!members) {
-    throw new Error('Forbidden: You are not a member of this room');
-  }
 
   // Insert message with correct user_id
   const messageToInsert = {

@@ -208,7 +208,7 @@ export default function ChatWindow({ header, open, cancelChat, onMouseOver, room
                 : clientId.current === msg.client_id;
 
               const senderLabel = isLoggedInMode
-                ? msg.profile?.name || msg.user?.name || 'User' // adjust to your actual data shape
+                ? user.name || user.email
                 : msg.client_id?.slice(-3) || '???';
 
               return (
