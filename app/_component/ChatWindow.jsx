@@ -103,8 +103,16 @@ export default function ChatWindow({ header, open, cancelChat, onMouseOver, room
       // Broadcast listener for anonymous chat
       channel.on('broadcast', { event: 'new_message' }, (payload) => {
         const msg = payload.payload;
-        if (msg.client_id === clientId.current) return; // ignore own echo
-        setMessages((prev) => [...prev, msg]);
+
+        if (!msg?.content || typeof msg !== 'object') return;
+        if (msg.client_id === clientId.current) return;
+
+        if (!messages?.length) {
+          setMessages([msg]);
+        } else {
+          setMessages((prev) => [...prev, msg]);
+        }
+
       });
 
       // Subscribe to member channel to get logged-in count
