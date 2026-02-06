@@ -213,7 +213,7 @@ export default function ChatWindow({ header, open, cancelChat, onMouseOver, room
                 ? msg.user_id === user?.id
                 : msg.client_id === clientId.current;
 
-              const shortId = msg.client_id.slice(-4) || '????';
+              const shortId = msg?.client_id?.slice(-4) || '????';
 
               const senderLabel = isLoggedInMode ? `${msg.name} ` : `Guest (${shortId})`;
 
