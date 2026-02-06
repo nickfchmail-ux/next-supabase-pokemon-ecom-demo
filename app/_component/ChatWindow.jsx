@@ -188,9 +188,9 @@ export default function ChatWindow({ header, open, cancelChat, onMouseOver, room
 
   useEffect(() => {
     setMessages(data);
-    console.log(messages);
+
   }, [isLoadingMessages]);
-  console.log(messages);
+
   return (
     <form
       onSubmit={handleSubmit}
@@ -213,9 +213,9 @@ export default function ChatWindow({ header, open, cancelChat, onMouseOver, room
                 ? msg.user_id === user?.id
                 : msg.client_id === clientId.current;
 
-              const shortId = isLoggedInMode ? msg.user_id || '????' : msg.client_id || '????';
+              const shortId = msg.client_id.slice(-4) || '????';
 
-              const senderLabel = isLoggedInMode ? `${msg.name} ` : `Guest ${shortId}`;
+              const senderLabel = isLoggedInMode ? `${msg.name} ` : `Guest (${shortId})`;
 
               return (
                 <div
