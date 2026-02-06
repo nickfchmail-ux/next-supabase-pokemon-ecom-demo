@@ -35,7 +35,7 @@ export default function ChatWindow({ header, open, cancelChat, onMouseOver, room
   const { data, isPending: isLoadingMessages } = useQuery({
     queryKey: ['roomMessages', roomId],
     enabled: open && !!roomId,
-    queryFn: () => loadRoomMessages({ roomId }),
+    queryFn: () => loadRoomMessages({ roomId: roomId }),
     onSuccess: (data) => {
       setMessages(data || []);
     },
@@ -138,6 +138,7 @@ export default function ChatWindow({ header, open, cancelChat, onMouseOver, room
 
   // Auto-scroll to bottom
   useEffect(() => {
+    if (!messages?.length) return;
     const container = scrollContainerRef.current;
     if (!container) return;
 
@@ -160,6 +161,7 @@ export default function ChatWindow({ header, open, cancelChat, onMouseOver, room
       const newMsg = {
         room_id: roomId,
         content: input,
+        name: user.name,
       };
       sendMessage(newMsg);
     } else {
@@ -184,6 +186,11 @@ export default function ChatWindow({ header, open, cancelChat, onMouseOver, room
     setInput('');
   };
 
+  useEffect(() => {
+    setMessages(data);
+    console.log(messages);
+  }, [isLoadingMessages]);
+  console.log(messages);
   return (
     <form
       onSubmit={handleSubmit}
@@ -206,11 +213,9 @@ export default function ChatWindow({ header, open, cancelChat, onMouseOver, room
                 ? msg.user_id === user?.id
                 : msg.client_id === clientId.current;
 
-              const shortId = isLoggedInMode
-                ? msg.user_id || '????'
-                : msg.client_id || '????';
+              const shortId = isLoggedInMode ? msg.user_id || '????' : msg.client_id || '????';
 
-              const senderLabel = isLoggedInMode ? `User ${shortId}` : `Guest ${shortId}`;
+              const senderLabel = isLoggedInMode ? `${msg.name} ` : `Guest ${shortId}`;
 
               return (
                 <div
@@ -220,7 +225,7 @@ export default function ChatWindow({ header, open, cancelChat, onMouseOver, room
                   <div
                     className={`
                       max-w-[75%] w-fit rounded-lg px-3 py-2 text-sm
-                      ${isOwnMessage ? 'bg-green-200' : 'bg-amber-100'}
+                      ${!isOwnMessage ? 'bg-green-200' : 'bg-amber-100'}
                     `}
                   >
                     {!isOwnMessage && (

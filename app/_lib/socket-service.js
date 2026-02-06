@@ -26,7 +26,7 @@ export async function loadRoomMessages({ roomName = 'General Room', roomId }) {
     .limit(20);
 
   if (msgError) throw msgError;
-
+  console.log('messages from server: ', messages);
   return messages || [];
 }
 
