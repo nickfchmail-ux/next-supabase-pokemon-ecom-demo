@@ -10,7 +10,7 @@ const supabaseAdmin = createClient(
 
 export async function loadRoomMessages({ roomName = 'General Room', roomId }) {
 
-
+  if (!roomId) return [];
   const session = await auth();
 
   if (!session?.user?.id) {
