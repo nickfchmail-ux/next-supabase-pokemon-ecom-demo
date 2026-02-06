@@ -10,12 +10,12 @@ const chatRoomSlice = createSlice({
   initialState, // <-- you forgot to include this
   reducers: {
     setAnonymousUserAction(state, action) {
-      console.log('check payload: ', action.payload);
+
       state.anonymousUser = action.payload;
     },
 
     setLoggedInUserAction(state, action) {
-      console.log('check payload: ', action.payload);
+
       state.loggedInUser = action.payload;
     },
   },

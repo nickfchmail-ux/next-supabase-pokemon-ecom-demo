@@ -4,8 +4,11 @@ import { createClient } from '@supabase/supabase-js';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useEffect, useRef, useState, useTransition } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { loadRoomMessages, updateVisitorInOutFlow, uploadMessage } from '../_lib/socket-service';
-
+import { loadRoomMessages, uploadMessage } from '../_lib/socket-service';
+import {
+  setAnonymousUserAction,
+  setLoggedInUserAction,
+} from '../_state/_global/chatRoom/chatRoomSlice';
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL,
   process.env.NEXT_PUBLIC_SUPABASE_KEY
@@ -29,16 +32,10 @@ export default function ChatWindow({ header, open, cancelChat, onMouseOver, room
   const user = useSelector((state) => state.user.user);
   const room = useSelector((state) => state.user.chatRoomId);
 
-  const handleVisitorUpdate = (obj) => {
-    startTransition(async () => {
-      await updateVisitorInOutFlow(obj);
-    });
-  };
-
   const { data, isPending: isSettingMessages } = useQuery({
     queryKey: ['roomMessages'],
     enabled: open && !!roomId,
-    queryFn: () => loadRoomMessages({ roomId }),
+    queryFn: () => loadRoomMessages({ roomId: room }),
     onSuccess: (data) => {
       setMessages(data);
     },
@@ -51,7 +48,6 @@ export default function ChatWindow({ header, open, cancelChat, onMouseOver, room
   } = useMutation({
     mutationFn: (newMsg) => uploadMessage(newMsg),
     onSuccess: (data) => {
-      console.log('successfull uploaded: ', data);
       queryClient.invalidateQueries({ queryKey: ['roomMessages'] });
     },
     onError: (error) => {},
@@ -67,13 +63,13 @@ export default function ChatWindow({ header, open, cancelChat, onMouseOver, room
     if (isSettingMessages) return;
     const sortByTime = data.sort((a, b) => new Date(a.created_at) - new Date(b.created_at));
     setMessages(sortByTime ?? []);
-  }, [isPending]);
+  }, [isSettingMessages]);
 
   const filterString = `room_id=eq.${room}`;
 
   // Realtime subscription
   useEffect(() => {
-    const channelName = !!room ? `room-${room}` : 'visitor-broadcast';
+    const channelName = !!room ? `member-channel` : 'visitor-broadcast';
     let channel = supabase.channel(channelName, {
       config: {
         broadcast: {
@@ -88,11 +84,10 @@ export default function ChatWindow({ header, open, cancelChat, onMouseOver, room
       const count = Object.keys(state).length;
 
       if (user) {
-        setLoggedInUser(count);
-        handleVisitorUpdate({ loggedIn: count });
+        dispatch(setLoggedInUserAction(count));
       } else {
         setAnonymousUser(count);
-        handleVisitorUpdate({ anonymous: count });
+        dispatch(setAnonymousUserAction(count));
       }
     });
 
@@ -109,6 +104,18 @@ export default function ChatWindow({ header, open, cancelChat, onMouseOver, room
           setMessages((prev) => [...prev, payload.new]); // payload.new = the full row
         }
       );
+
+      let anonymousChannel = supabase.channel('visitor-broadcast');
+
+      anonymousChannel.on('presence', { event: 'sync' }, () => {
+        const state = anonymousChannel.presenceState();
+
+        const anonCount = Object.keys(state).length;
+
+        dispatch(setAnonymousUserAction(anonCount));
+      });
+
+      anonymousChannel.subscribe();
     } else {
       channel.on('broadcast', { event: 'new_message' }, (payload) => {
         const msg = payload.payload;
@@ -117,6 +124,16 @@ export default function ChatWindow({ header, open, cancelChat, onMouseOver, room
 
         setMessages((prev) => [...prev, msg]);
       });
+
+      let loggedInChannel = supabase.channel('member-channel');
+      loggedInChannel.on('presence', { event: 'sync' }, () => {
+        const state = loggedInChannel.presenceState();
+        const loggedInCount = Object.keys(state).length;
+
+        dispatch(setLoggedInUserAction(loggedInCount));
+      });
+
+      loggedInChannel.subscribe();
     }
 
     // Single subscribe + track presence
@@ -124,7 +141,6 @@ export default function ChatWindow({ header, open, cancelChat, onMouseOver, room
       if (status === 'SUBSCRIBED') {
         await channel.track({ online: true });
       }
-      console.log('channel status:', status);
     });
 
     currentChannel.current = channel;
@@ -185,6 +201,7 @@ export default function ChatWindow({ header, open, cancelChat, onMouseOver, room
     setInput('');
   };
   const isLoggedInMode = !!(user && roomId);
+
   return (
     <form
       onSubmit={handleSubmit}
@@ -200,7 +217,7 @@ export default function ChatWindow({ header, open, cancelChat, onMouseOver, room
         ref={bottomRef}
         className={`overflow-y-auto border-t border-primary-500 flex-1 p-2 ${onMouseOver ? 'text-primary-600' : 'text-primary-900'}`}
       >
-        {isPending
+        {roomId && isSettingMessages
           ? 'Loading messages...'
           : messages?.map((msg, i) => {
               const isOwnMessage = isLoggedInMode

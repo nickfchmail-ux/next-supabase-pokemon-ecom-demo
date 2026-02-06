@@ -9,6 +9,8 @@ const supabaseAdmin = createClient(
 );
 
 export async function loadRoomMessages({ roomName = 'General Room', roomId }) {
+
+  console.log('roomId: ', roomId);
   const session = await auth();
 
   if (!session?.user?.id) {
