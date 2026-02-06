@@ -187,7 +187,11 @@ export default function ChatWindow({ header, open, cancelChat, onMouseOver, room
   };
 
   useEffect(() => {
-    setMessages(data);
+    const sortedData = data?.sort(
+      (a, b) => new Date(a.created_at).getTime() - new Date(b.created_at).getTime()
+    );
+
+    setMessages(sortedData);
 
   }, [isLoadingMessages]);
 
