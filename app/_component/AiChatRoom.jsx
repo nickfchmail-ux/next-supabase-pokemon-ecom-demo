@@ -40,7 +40,7 @@ export default function AiChatRoom({ aiQuery, setAiQuery, isPending }) {
               >
                 <div className="flex gap-1 justify-start items-center text-center mb-1">
                   <img src="/duck-icon.png" alt="duck-icon" className={`w-[20px] h-[20px]`} />{' '}
-                  <strong className={`pt-2`}>芒 Bot:</strong>
+                  <strong className={`pt-2`}>:</strong>
                 </div>
                 <div className="break-words whitespace-pre-wrap">{msg.answer}</div>
               </div>

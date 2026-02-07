@@ -150,7 +150,7 @@ export default function ChatWindow({ header, open, cancelChat, onMouseOver, room
           className={`px-2 py-1 cursor-pointer rounded-full border border-primary-500  ml-1 text-[12px] shadow-accent   ${switchToAiChat ? 'bg-primary-600 shadow-lg border border-primary-950 text-white ' : 'hover:text-primary-900'}`}
           onClick={() => setSwitchToAiChat(!switchToAiChat)}
         >
-          On Bot
+          AI Chat
         </button>
       </div>
       <form onSubmit={handleSubmit} className="grid grid-rows-[auto_1fr_auto] overflow-y-auto">
