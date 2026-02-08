@@ -29,7 +29,7 @@ export default function ChatBox() {
   }, [roomId]);
 
   return (
-    <div ref={parentRef} className="fixed inset-0 pointer-events-none z-50 ">
+    <div ref={parentRef} className="fixed inset-0 pointer-events-none z-20000 ">
       <motion.div
         drag
         dragConstraints={parentRef}

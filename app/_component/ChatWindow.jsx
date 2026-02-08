@@ -99,14 +99,14 @@ export default function ChatWindow({
       const cacheKey = ['deepseek-response', input.trim()];
 
       const returnFromPrevResponseWithTheSameContent = queryClient.getQueryData(cacheKey);
-      console.log('prev query: ', returnFromPrevResponseWithTheSameContent);
+
       if (returnFromPrevResponseWithTheSameContent) {
         let modifiedReturn = { ...returnFromPrevResponseWithTheSameContent };
         modifiedReturn.answer = modifiedReturn.answer + '-repeated ';
 
         setAiQuery((prev) => [...prev, modifiedReturn]);
       } else {
-        console.log('input: ', input.trim());
+
         sendQueryToDeepSeek(input.trim());
       }
     } else {
