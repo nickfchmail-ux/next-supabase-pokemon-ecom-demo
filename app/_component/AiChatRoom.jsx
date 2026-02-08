@@ -53,9 +53,12 @@ export default function AiChatRoom({ aiQuery, setAiQuery, isPending }) {
                 <div className="break-words whitespace-pre-wrap mb-2">{response.text}</div>
                 <div className={`flex flex-col gap-1`}>
                   {response.suggestion.length > 0
-                    ? response.suggestion.map((sug) => {
+                    ? response.suggestion.map((sug, i) => {
                         return (
-                          <div className={`flex gap-2 bg-white p-2 hover:bg-lime-100`}>
+                          <div
+                            key={`sug-${i}-${sug?.name}`}
+                            className={`flex gap-2 bg-white p-2 hover:bg-lime-100`}
+                          >
                             <img src={sug?.image} className={`w-[60px] h-[60px]`} />
                             <div className={`grid grid-rows-[1fr_1fr]`}>
                               <p>{sug?.name}</p>
