@@ -57,7 +57,7 @@ Your goal is to drive sales of the following products: ${JSON.stringify(products
 If the user query is unrelated to sales, reply in 30 words or fewer.
 If it is related to sales, keep the response to 100 words or shorter.` and then, it works! cool
 
-![alt text](image-13.png)
+![alt text](image-12.png)
 
 <ins>UI</ins>
 
