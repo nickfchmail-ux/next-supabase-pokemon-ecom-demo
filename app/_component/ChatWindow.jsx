@@ -1,5 +1,6 @@
 'use client';
-
+import CompressIcon from '@mui/icons-material/Compress';
+import ExpandIcon from '@mui/icons-material/Expand';
 import Switch from '@mui/material/Switch';
 import { createClient } from '@supabase/supabase-js';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
@@ -14,7 +15,15 @@ const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_KEY
 );
 
-export default function ChatWindow({ header, open, cancelChat, onMouseOver, roomId }) {
+export default function ChatWindow({
+  header,
+  open,
+  cancelChat,
+  onMouseOver,
+  roomId,
+  extendWindow,
+  setExtendWindow,
+}) {
   const dispatch = useDispatch();
   const [isPending, startTransition] = useTransition();
   const prevMessagesLength = useRef(0);
@@ -141,13 +150,14 @@ export default function ChatWindow({ header, open, cancelChat, onMouseOver, room
   }, [isLoadingMessages]);
 
   return (
-    <div className={`grid grid-rows-[auto_1fr] h-full w-full z-50 text-primary-900`}>
+    <div className={`grid grid-rows-[auto_1fr] h-full w-full z-50 text-primary-900 `}>
       <div
         className={`h-min px-2 pb-1 flex justify-between border border-b-primary-800 items-center relative`}
       >
         <strong className={`${onMouseOver ? 'text-blue-500' : 'text-primary-900'} relative`}>
           {header}
         </strong>
+
         <div className={`relative`}>
           <p
             className="absolute right-2 -top-.5 text-[10px] font-semibold text-cyan-400
@@ -162,6 +172,16 @@ export default function ChatWindow({ header, open, cancelChat, onMouseOver, room
           status: on{' '}
           {user ? (switchToAiChat ? 'AI' : 'Member') : switchToAiChat ? 'AI' : 'Anonymous'} channel
         </p>
+        <button
+          className={`absolute bottom-0 right-0 cursor-pointer`}
+          onClick={() => setExtendWindow(!extendWindow)}
+        >
+          {extendWindow ? (
+            <CompressIcon sx={{ fontSize: 15 }} />
+          ) : (
+            <ExpandIcon sx={{ fontSize: 15 }} />
+          )}
+        </button>
       </div>
 
       <form onSubmit={handleSubmit} className="grid grid-rows-[auto_1fr_auto] overflow-y-auto">
