@@ -56,11 +56,11 @@ export default function AiChatRoom({ aiQuery, setAiQuery, isPending }) {
                     ? response.suggestion.map((sug) => {
                         return (
                           <div className={`flex gap-2 bg-white p-2 hover:bg-lime-100`}>
-                            <img src={sug.image} className={`w-[60px] h-[60px]`} />
+                            <img src={sug?.image} className={`w-[60px] h-[60px]`} />
                             <div className={`grid grid-rows-[1fr_1fr]`}>
-                              <p>{sug.name}</p>
+                              <p>{sug?.name}</p>
                               <button
-                                onClick={() => goToPokemon(sug.id)}
+                                onClick={() => goToPokemon(sug?.id)}
                                 className={`border border-green-400 rounded-full px-2 py-1 hover:text-green-500 text-blue-500 hover:-translate-y-1 active:bg-blue-300`}
                               >
                                 Go
