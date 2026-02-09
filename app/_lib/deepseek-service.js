@@ -50,8 +50,10 @@ export async function deepSeekApiQuery(content) {
   } catch (err) {
     console.log(`Error: ${err}`);
     return {
-      text: 'Sorry we are facing some issue, please try again later...',
-      suggestion: [],
+      question: content.trim(),
+      answer: { text: 'Sorry we are facing some issue, please try again later...', suggestion: [] },
+      id: completion.id, // optional
+      created: completion.created, // timestamp, number – safe
     };
   }
 }
