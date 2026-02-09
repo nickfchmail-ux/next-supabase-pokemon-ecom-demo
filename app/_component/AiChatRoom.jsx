@@ -30,7 +30,10 @@ export default function AiChatRoom({ aiQuery, setAiQuery, isPending }) {
     <div ref={scrollContainerRef} className={`flex-1   overflow-y-auto`}>
       {aiQuery.map((msg, i) => {
         console.log('response: ', msg);
-        const response = JSON.parse(msg.answer);
+        const response =
+          typeof msg.answer === 'string' && msg.answer.startsWith('{')
+            ? JSON.parse(msg.answer)
+            : msg.answer;
 
         return (
           <div key={`ai-deep-seek-query-${i} `}>
@@ -60,11 +63,11 @@ export default function AiChatRoom({ aiQuery, setAiQuery, isPending }) {
                             className={`flex gap-2 bg-white p-2 hover:bg-lime-100`}
                           >
                             <img src={sug?.image} className={`w-[60px] h-[60px]`} />
-                            <div className={`grid grid-rows-[1fr_1fr]`}>
+                            <div className={`grid grid-rows-[1fr_1fr] w-full`}>
                               <p>{sug?.name}</p>
                               <button
                                 onClick={() => goToPokemon(sug?.id)}
-                                className={`border border-green-400 rounded-full px-2 py-1 hover:text-green-500 text-blue-500 hover:-translate-y-1 active:bg-blue-300`}
+                                className={`border border-green-400 rounded-full px-2 py-1 hover:text-green-500 text-blue-500 hover:-translate-y-1 active:bg-blue-300 w-[50px]`}
                               >
                                 Go
                               </button>

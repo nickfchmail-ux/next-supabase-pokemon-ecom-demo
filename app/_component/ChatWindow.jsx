@@ -1,10 +1,12 @@
 'use client';
 import CompressIcon from '@mui/icons-material/Compress';
 import ExpandIcon from '@mui/icons-material/Expand';
+import Box from '@mui/material/Box';
+import Skeleton from '@mui/material/Skeleton';
 import Switch from '@mui/material/Switch';
 import { createClient } from '@supabase/supabase-js';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { Activity, useEffect, useRef, useState, useTransition } from 'react';
+import { Activity, useEffect, useOptimistic, useRef, useState, useTransition } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { deepSeekApiQuery } from '../_lib/deepseek-service';
 import { loadRoomMessages, uploadMessage } from '../_lib/socket-service';
@@ -38,6 +40,25 @@ export default function ChatWindow({
   const [aiQuery, setAiQuery] = useState([]);
   const user = useSelector((state) => state.user.user);
 
+  const [optimisticAiQuery, setOptimisticAiQuery] = useOptimistic(aiQuery, (state, text) => {
+    return [
+      ...state,
+      {
+        question: input?.trim(),
+        answer: {
+          text: (
+            <Box sx={{ width: 120 }}>
+              <Skeleton />
+              <Skeleton animation="wave" />
+              <Skeleton animation={false} />
+            </Box>
+          ),
+          suggestion: [],
+        },
+      },
+    ];
+  });
+
   const isLoggedInMode = !!user && !!roomId;
 
   const { data, isPending: isLoadingMessages } = useQuery({
@@ -58,12 +79,21 @@ export default function ChatWindow({
     mutationFn: (newMsg) => uploadMessage(newMsg),
   });
 
-  const { mutate: sendQueryToDeepSeek, isPending: isSendingDeepSeekQuery } = useMutation({
+  const { mutateAsync: sendQueryToDeepSeek, isPending: isSendingDeepSeekQuery } = useMutation({
     mutationFn: (content) => deepSeekApiQuery(content),
     onSuccess: (data, content) => {
-      const cacheKey = ['deepseek-response', content];
-      queryClient.setQueryData(cacheKey, data);
-      setAiQuery((prev) => [...prev, data]);
+      queryClient.setQueryData(['deepseek-response', content], data);
+      // Replace pending skeleton with real response
+      setAiQuery((prev) =>
+        prev.map((item) =>
+          // Rough check: if this item looks like our pending skeleton
+          item.question === content && item.isPending ? data : item
+        )
+      );
+    },
+    // Optional: onError to remove failed message
+    onError: (err, content) => {
+      setAiQuery((prev) => prev.filter((item) => item.question !== content || !item.isPending));
     },
   });
 
@@ -98,14 +128,27 @@ export default function ChatWindow({
     if (switchToAiChat) {
       const cacheKey = ['deepseek-response', input.trim()];
 
-      const returnFromPrevResponseWithTheSameContent = queryClient.getQueryData(cacheKey);
-
-      if (returnFromPrevResponseWithTheSameContent) {
-        let modifiedReturn = { ...returnFromPrevResponseWithTheSameContent };
-        modifiedReturn.answer = modifiedReturn.answer + '-repeated ';
-
-        setAiQuery((prev) => [...prev, modifiedReturn]);
+      const cached = queryClient.getQueryData(['deepseek-response', input.trim()]);
+      if (cached) {
+        setAiQuery((prev) => [...prev, cached]);
       } else {
+        setAiQuery((prev) => [
+          ...prev,
+          {
+            question: input.trim(),
+            isPending: true,
+            answer: {
+              text: (
+                <Box sx={{ width: 120 }}>
+                  <Skeleton />
+                  <Skeleton animation="wave" />
+                  <Skeleton animation={false} />
+                </Box>
+              ),
+              suggestion: [],
+            },
+          },
+        ]);
 
         sendQueryToDeepSeek(input.trim());
       }
@@ -131,12 +174,12 @@ export default function ChatWindow({
             payload: newMsg,
           });
           setMessages((prev) => [...prev, newMsg]);
+          setInput('');
         } catch (err) {
           console.error('Broadcast failed:', err);
         }
       }
     }
-
     setInput('');
   };
 
@@ -198,11 +241,7 @@ export default function ChatWindow({
         </Activity>
 
         <Activity mode={switchToAiChat ? 'visible' : 'hidden'}>
-          <AiChatRoom
-            aiQuery={aiQuery}
-            setAiQuery={setAiQuery}
-            isPending={isSendingDeepSeekQuery}
-          />
+          <AiChatRoom aiQuery={optimisticAiQuery} isPending={isSendingDeepSeekQuery} />
         </Activity>
 
         <div className="flex flex-col mt-auto">
