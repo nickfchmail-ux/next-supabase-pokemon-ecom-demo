@@ -50,7 +50,7 @@ export default function AiChatRoom({ aiQuery, setAiQuery, isPending }) {
                   <strong className={`pt-2`}>:</strong>
                 </div>
 
-                <div className="break-words whitespace-pre-wrap mb-2">{response.text}</div>
+                <div className="wrap-break-words whitespace-pre-wrap mb-2">{response.text}</div>
                 <div className={`flex flex-col gap-1`}>
                   {response.suggestion.length > 0
                     ? response.suggestion.map((sug, i) => {
