@@ -61,7 +61,7 @@ If it is related to sales, keep the response to 100 words or shorter. you must p
 
 ![alt text](image-14.png)
 
-- The chat bot is able to remember client's preference and provide pokemon's suggestions based on past their past interactions. If users are logged in, each conversation would be posted to Supabase for a better utilization of data. Eventually, it could be used too track customer preferences and initiate sale and promotion strategies.
+- The chat bot is able to remember client's preference and provide pokemon's suggestions based on their past interactions. If users are logged in, each conversation would be posted to Supabase for a better utilization of data. Eventually, it could be used too track customer preferences and initiate sale and promotion strategies.
 
 
 ![alt text](image-16.png)
