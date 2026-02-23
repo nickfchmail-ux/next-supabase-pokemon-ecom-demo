@@ -31,10 +31,10 @@ Live demo (Web): https://next-pokemon-ecom-demo.vercel.app/
 | 1 | Stripe               | Payments    | ![Stripe](image-2.png)                                                      | in-progress                          |
 | 2 | User Profile         | Update info with TanStack Query mutations & loading states                  | ![Profile](image-4.png)        | in-progress              |
 | 3 | Infinite Scrolling   | Lazy-load products like YouTube using TanStack Query                        | ![Shop](image-3.png)            | ![Shop](shop.jpg)               |
-| 4 | Stripe Payments      | Real online checkout – learned from docs + YouTube                          | ![Payment](image-2.png)         | (In progress?)                  |
-| 5 | Live Chat (Socket.io)| Anonymous realtime chat, saved to Supabase if logged in                    | ![Chat](image-8.png)            | (Add mobile chat screenshot)    |
-| 6 | Live User Tracking   | Shows online users in realtime via Supabase                                 | ![Tracking](image-11.png)       | (Add if implemented)            |
-| 7 | AI Chat Bot          | 24/7 sales assistant – suggests Pokémon in JSON, remembers preferences     | ![AI Bot](image-14.png) ![History](image-16.png) | (Possible future addition)      |
+| 4 | Stripe Payments      | Real online checkout – learned from docs + YouTube                          | ![Payment](image-2.png)         | In progress                 |
+| 5 | Live Chat (Socket.io)| Anonymous realtime chat, saved to Supabase if logged in                    | ![Chat](image-8.png)            | In-progress    |
+| 6 | Live User Tracking   | Shows online users in realtime via Supabase                                 | ![Tracking](image-11.png)       | In-progress           |
+| 7 | AI Chat Bot          | 24/7 sales assistant – suggests Pokémon in JSON, remembers preferences     | ![AI Bot](image-14.png) ![History](image-16.png) | In-progress     |
 
 ## Screenshots Overview
 
