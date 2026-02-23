@@ -60,5 +60,5 @@ Live demo (Web): https://next-pokemon-ecom-demo.vercel.app/
   </tr>
 </table>
 
-## UI Inspiration (Modern Clean Vibes)
+
 
