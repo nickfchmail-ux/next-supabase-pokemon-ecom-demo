@@ -62,21 +62,3 @@ Live demo (Web): https://next-pokemon-ecom-demo.vercel.app/
 
 ## UI Inspiration (Modern Clean Vibes)
 
-Here are some sleek e-commerce designs to inspire further improvements for both web and mobile:
-
-<grok-card data-id="706012" data-type="image_card" data-plain-type="render_searched_image"  data-arg-size="LARGE" ></grok-card>
-
-
-
-<grok-card data-id="4bf53e" data-type="image_card" data-plain-type="render_searched_image"  data-arg-size="LARGE" ></grok-card>
-
-
-
-<grok-card data-id="a6522a" data-type="image_card" data-plain-type="render_searched_image"  data-arg-size="LARGE" ></grok-card>
-
-
-
-<grok-card data-id="98326b" data-type="image_card" data-plain-type="render_searched_image"  data-arg-size="LARGE" ></grok-card>
-
-
-Star ⭐ if you enjoy Pokémon + smart shopping tech!
