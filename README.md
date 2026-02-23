@@ -16,13 +16,13 @@ Live demo (Web): https://next-pokemon-ecom-demo.vercel.app/
 | Category       | Web (Next.js)                          | Mobile (React Native)             |
 |----------------|----------------------------------------|-----------------------------------|
 | Framework      | Next.js                                | React Native + Expo Router        |
-| State          | Redux, TanStack Query                  | (Add yours – Redux?)              |
+| State          | Redux, TanStack Query                  | Redux              |
 | Backend        | Supabase (DB + realtime)               | Supabase                          |
-| Auth           | NextAuth                               | (Expo auth or Supabase)           |
-| Payments       | Stripe                                 | (Stripe integration?)             |
-| Chat           | Socket.io                              | (Socket.io or similar)            |
-| Styling        | Tailwind CSS                           | (NativeWind / Tailwind?)          |
-| AI Features    | OpenAI / DeepSeek API (chat bot)       | (Possible chat bot port)          |
+| Auth           | NextAuth                               |   Supabase auth         |
+| Payments       | Stripe                                 | Stripe             |
+| Chat           | Supabase realtime                            |  Supabase realtime            |
+| Styling        | Tailwind CSS                           | NativeWind         |
+| AI Features    | DeepSeek API (chat bot)       | DeepSeek API (chat bot)          |
 
 ## Main Features
 
