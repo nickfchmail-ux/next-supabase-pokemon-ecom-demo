@@ -28,8 +28,8 @@ Live demo (Web): https://next-pokemon-ecom-demo.vercel.app/
 
 | # | Feature              | Description                                                                 | Web Screenshot                  | Mobile Screenshot               |
 |---|----------------------|-----------------------------------------------------------------------------|---------------------------------|---------------------------------|
-| 1 | Shopping Cart        | Dynamic quantity, billing, Supabase sync with useState + useEffect fix     | ![Cart](image-2.png)            | ![Cart](cart.jpg)               |
-| 2 | User Profile         | Update info with TanStack Query mutations & loading states                  | ![Profile](image-4.png)         | (Add if available)              |
+| 1 | Stripe               | Payments    | ***                                                      | on-progress                          |
+| 2 | User Profile         | Update info with TanStack Query mutations & loading states                  | on-progress          | (Add if available)              |
 | 3 | Infinite Scrolling   | Lazy-load products like YouTube using TanStack Query                        | ![Shop](image-3.png)            | ![Shop](shop.jpg)               |
 | 4 | Stripe Payments      | Real online checkout – learned from docs + YouTube                          | ![Payment](image-2.png)         | (In progress?)                  |
 | 5 | Live Chat (Socket.io)| Anonymous realtime chat, saved to Supabase if logged in                    | ![Chat](image-8.png)            | (Add mobile chat screenshot)    |
