@@ -1,4 +1,4 @@
-# Poke 芒 – Pokémon E-commerce 🛒🔥
+# Poke 芒 – Pokémon E-commerce
 
 Pokémon-themed online shop with a **web version** (Next.js) and **mobile app** (React Native).
 One project, two platforms – built to deliver fun shopping on desktop and on the go!
