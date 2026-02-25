@@ -2,7 +2,7 @@
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
-
+import Carousel from './_component/home/Caurosel';
 const container = {
   hidden: { opacity: 0 },
   visible: {
@@ -100,69 +100,7 @@ export default function Page() {
           </motion.div>
         </div>
       </motion.div>
-
-      {/* Featured Pokémon Section */}
-      <motion.section
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.2 }}
-        variants={container}
-        className="bg-white py-24 sm:py-32"
-      >
-        <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          <motion.h2
-            variants={headingVariants}
-            className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl text-center"
-          >
-            Featured Pokémon
-          </motion.h2>
-          <div className="mt-10 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
-            {/* Each card gets its own fade-up animation */}
-            {['Bulbasaur', 'Charmander', 'Squirtle', 'Pikachu'].map((name, i) => (
-              <motion.div key={name} variants={itemFadeUp} className="group relative">
-                <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80">
-                  <Image
-                    src={`https://img.pokemondb.net/artwork/large/${name.toLowerCase()}.jpg`}
-                    alt={name}
-                    fill
-                    className="object-cover"
-                  />
-                </div>
-                <div className="mt-4 flex justify-between">
-                  <div>
-                    <h3 className="text-sm text-gray-700">
-                      <a href="#">
-                        <span aria-hidden="true" className="absolute inset-0"></span>
-                        {name}
-                      </a>
-                    </h3>
-                    <p className="mt-1 text-sm text-gray-500">
-                      {name === 'Bulbasaur'
-                        ? 'Grass/Poison'
-                        : name === 'Charmander'
-                          ? 'Fire'
-                          : name === 'Squirtle'
-                            ? 'Water'
-                            : 'Electric'}
-                    </p>
-                  </div>
-                  <p className="text-sm font-medium text-gray-900">
-                    $
-                    {name === 'Bulbasaur'
-                      ? 45
-                      : name === 'Charmander'
-                        ? 50
-                        : name === 'Squirtle'
-                          ? 55
-                          : 75}
-                  </p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </motion.section>
-
+      <Carousel />
       {/* Why Choose Us Section */}
       <motion.section
         initial="hidden"
