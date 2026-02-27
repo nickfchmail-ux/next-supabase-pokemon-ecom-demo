@@ -1,0 +1,163 @@
+$item-width: 300px;
+$gap: 20px;
+$offset: $item-width + $gap;
+
+// ────────────────────────────────────────────────
+// Static states (initial load without animation)
+// ────────────────────────────────────────────────
+
+.staticActive {
+  transform: translate(-50%, -50%) scale(1.05);
+  opacity: 1;
+  z-index: 2;
+  background-color: white;
+}
+
+.staticBefore {
+  transform: translate(calc(-50% - #{$offset}), -50%) scale(0.9);
+  opacity: 0.7;
+  z-index: 1;
+}
+
+.staticAfter {
+  transform: translate(calc(-50% + #{$offset}), -50%) scale(0.9);
+  opacity: 0.7;
+  z-index: 1;
+}
+
+// ────────────────────────────────────────────────
+// Active states (Items moving left <--) "Right Click"
+// ────────────────────────────────────────────────
+
+.activeFromSlidingRight {
+  animation: moveRightToCenter 0.5s ease-out forwards;
+}
+
+.beforeFromSlidingRight {
+  animation: moveCenterToLeft 0.5s ease-out forwards;
+}
+
+.afterFromSlidingRight {
+  animation: moveFarRightToRight 0.5s ease-out forwards;
+}
+
+// ────────────────────────────────────────────────
+// Active states (Items moving right -->) "Left Click"
+// ────────────────────────────────────────────────
+
+.activeFromSlidingLeft {
+  animation: moveLeftToCenter 0.5s ease-out forwards;
+}
+
+.beforeFromSlidingLeft {
+  animation: moveFarLeftToLeft 0.5s ease-out forwards;
+}
+
+.afterFromSlidingLeft {
+  animation: moveCenterToRight 0.5s ease-out forwards;
+}
+
+.image {
+  display: none; // Unused
+}
+
+// ────────────────────────────────────────────────
+// Keyframes: Items moving left (Right Click)
+// ────────────────────────────────────────────────
+
+@keyframes moveRightToCenter {
+  from {
+    transform: translate(calc(-50% + #{$offset}), -50%) scale(0.9);
+    opacity: 0.7;
+    z-index: 1;
+  }
+  to {
+    transform: translate(-50%, -50%) scale(1.05);
+    opacity: 1;
+    z-index: 2;
+  }
+}
+
+@keyframes moveCenterToLeft {
+  from {
+    transform: translate(-50%, -50%) scale(1.05);
+    opacity: 1;
+    z-index: 2;
+  }
+  to {
+    transform: translate(calc(-50% - #{$offset}), -50%) scale(0.9);
+    opacity: 0.7;
+    z-index: 1;
+  }
+}
+
+@keyframes moveFarRightToRight {
+  from {
+    // Coming from off-screen right
+    transform: translate(calc(-50% + (#{$offset} * 2)), -50%) scale(0.8);
+    opacity: 0;
+    z-index: 0;
+  }
+  to {
+    transform: translate(calc(-50% + #{$offset}), -50%) scale(0.9);
+    opacity: 0.7;
+    z-index: 1;
+  }
+}
+
+// ────────────────────────────────────────────────
+// Keyframes: Items moving right (Left Click)
+// ────────────────────────────────────────────────
+
+@keyframes moveLeftToCenter {
+  from {
+    transform: translate(calc(-50% - #{$offset}), -50%) scale(0.9);
+    opacity: 0.7;
+    z-index: 1;
+  }
+  to {
+    transform: translate(-50%, -50%) scale(1.05);
+    opacity: 1;
+    z-index: 2;
+  }
+}
+
+.animatedBg {
+  animation: showContent 5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+@keyframes showContent {
+  from {
+    clip-path: circle(0% at 50% 50%);
+  }
+  to {
+    clip-path: circle(150% at 50% 50%);
+  }
+}
+
+@keyframes moveCenterToRight {
+  from {
+    transform: translate(-50%, -50%) scale(1.05);
+    opacity: 1;
+    z-index: 2;
+  }
+  to {
+    transform: translate(calc(-50% + #{$offset}), -50%) scale(0.9);
+    opacity: 0.7;
+    z-index: 1;
+  }
+}
+
+@keyframes moveFarLeftToLeft {
+  from {
+    // Coming from off-screen left
+    transform: translate(calc(-50% - (#{$offset} * 2)), -50%) scale(0.8);
+    opacity: 0;
+    z-index: 0;
+  }
+  to {
+    transform: translate(calc(-50% - #{$offset}), -50%) scale(0.9);
+    opacity: 0.7;
+    z-index: 1;
+  }
+}

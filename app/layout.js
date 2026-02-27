@@ -46,7 +46,7 @@ export default async function RootLayout({ children }) {
             <ChatBox />
             <div className="max-w-7xl mx-auto bg-primary-800 md:max-w-[90vw]">{children}</div>
           </main>
-          <div className={`flex sticky bottom-0 md:hidden justify-evenly bg-primary-800`}>
+          <div className={`flex sticky bottom-0 md:hidden justify-evenly bg-primary-800 z-50`}>
             <NavigationLink view={'mobile'} user={session?.user} />
           </div>
           <Footer />

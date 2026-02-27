@@ -2,7 +2,9 @@
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
+import { Suspense, use, useEffect, useState } from 'react';
 import Carousel from './_component/home/Caurosel';
+import { getPokemonAction } from './_lib/actions';
 const container = {
   hidden: { opacity: 0 },
   visible: {
@@ -35,7 +37,19 @@ const textVariants = {
   },
 };
 
+function CarouselWrapper({ pokemonsPromise }) {
+  const result = use(pokemonsPromise);
+  const pokemons = result?.data || [];
+  return <Carousel initialPokemons={pokemons} />;
+}
+
 export default function Page() {
+  const [pokemonsPromise, setPokemonsPromise] = useState(null);
+
+  useEffect(() => {
+    setPokemonsPromise(getPokemonAction());
+  }, []);
+
   return (
     <div className="min-h-full bg-white">
       {/* Hero Section */}
@@ -100,7 +114,13 @@ export default function Page() {
           </motion.div>
         </div>
       </motion.div>
-      <Carousel />
+      <Suspense
+        fallback={
+          <div className="text-center py-20 text-gray-500">Loading featured Pokémon...</div>
+        }
+      >
+        {pokemonsPromise && <CarouselWrapper pokemonsPromise={pokemonsPromise} />}
+      </Suspense>
       {/* Why Choose Us Section */}
       <motion.section
         initial="hidden"
