@@ -192,8 +192,16 @@ export default function Carousel({ initialPokemons = [] }) {
                           <span aria-hidden="true" className={` absolute inset-0 `}></span>
                           {name}
                         </h3>
-                        <p className="mt-1 text-sm text-gray-500">
-                          {pokemon.species.map((type) => type).join(', ')}
+                        <p className="mt-1 text-sm text-gray-500 flex gap-2">
+                          {pokemon.species.map((type) => (
+                            <Image
+                              src={`/${type}.png`}
+                              alt={type}
+                              width={70}
+                              height={50}
+                              key={type}
+                            />
+                          ))}
                         </p>
                       </div>
                     </div>
