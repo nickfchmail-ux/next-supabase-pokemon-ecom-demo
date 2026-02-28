@@ -104,11 +104,39 @@ export default function Carousel({ initialPokemons = [] }) {
   const currentPokemon = pokemons[active];
   const primarySpecies = currentPokemon?.species?.[0]?.toLowerCase() || 'normal';
   const bgColorClass = typeColors[primarySpecies] || 'bg-gray-200';
-
+  const prevColorClass =
+    typeColors[
+      pokemons[active - 1 < 0 ? pokemons.length - 1 : active - 1]?.species?.[0]?.toLowerCase()
+    ] || 'bg-gray-200';
   return (
     <div className="relative">
-      {/* Animated Background Layer */}
-      <div key={active} className={`absolute inset-0 z-0 ${styles.animatedBg} ${bgColorClass}`} />
+      <div
+        key={`  ${active}-previous`}
+        className={`absolute inset-0 z-0 flex items-center ${prevColorClass || 'bg-gray-200'}`}
+      >
+        <div className={`pl-[200px] flex flex-col sm:hidden md:flex`}>
+          <div className={`border-b border-b-gray-300 w-max mb-2 items-center`}>
+            {pokemons[active - 1 < 0 ? pokemons.length - 1 : active - 1]?.name}
+          </div>
+          <div>Attack: {pokemons[active - 1 < 0 ? pokemons.length - 1 : active - 1]?.attack}</div>
+          <div>Defense: {pokemons[active - 1 < 0 ? pokemons.length - 1 : active - 1]?.defense}</div>
+          <div>Speed: {pokemons[active - 1 < 0 ? pokemons.length - 1 : active - 1]?.speed}</div>
+        </div>
+      </div>
+
+      <div
+        key={`  ${active}-current`}
+        className={`absolute inset-0 z-1 flex items-center ${styles.animatedBg} ${bgColorClass}`}
+      >
+        <div className={`pl-[200px] flex flex-col sm:hidden md:flex`}>
+          <div className={`border-b border-b-gray-300 w-max mb-2 items-center`}>
+            {pokemons[active]?.name}
+          </div>
+          <div>Attack: {pokemons[active]?.attack}</div>
+          <div>Defense: {pokemons[active]?.defense}</div>
+          <div>Speed: {pokemons[active]?.speed}</div>
+        </div>
+      </div>
 
       {/* Static fallback background to prevent flashing during animation */}
       <div
