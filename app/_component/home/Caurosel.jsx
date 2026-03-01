@@ -114,7 +114,7 @@ export default function Carousel({ initialPokemons = [] }) {
         key={`  ${active}-previous`}
         className={`absolute inset-0 z-0 flex items-center ${prevColorClass || 'bg-gray-200'}`}
       >
-        <div className={`pl-[200px] flex flex-col sm:hidden md:flex`}>
+        <div className={`pl-[200px] 2xl:flex 2xl:flex-col hidden `}>
           <div className={`border-b border-b-gray-300 w-max mb-2 items-center`}>
             {pokemons[active - 1 < 0 ? pokemons.length - 1 : active - 1]?.name}
           </div>
@@ -128,10 +128,8 @@ export default function Carousel({ initialPokemons = [] }) {
         key={`  ${active}-current`}
         className={`absolute inset-0 z-1 flex items-center ${styles.animatedBg} ${bgColorClass}`}
       >
-        <div className={`pl-[200px] flex flex-col sm:hidden md:flex`}>
-          <div className={`border-b border-b-gray-300 w-max mb-2 items-center`}>
-            {pokemons[active]?.name}
-          </div>
+        <div className={`pl-[200px] 2xl:flex 2xl:flex-col hidden `}>
+          <div className={`border-b border-b-gray-300 w-max mb-2 `}>{pokemons[active]?.name}</div>
           <div>Attack: {pokemons[active]?.attack}</div>
           <div>Defense: {pokemons[active]?.defense}</div>
           <div>Speed: {pokemons[active]?.speed}</div>
@@ -160,16 +158,16 @@ export default function Carousel({ initialPokemons = [] }) {
           </motion.h2>
           <div className="flex justify-between items-center gap-10 mt-5 pb-0">
             <button
-              className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-full shadow-md transition-all duration-200 transform hover:scale-105 active:scale-95 flex items-center justify-center min-w-[120px]"
+              className="bg-transparent hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-full shadow-md transition-all duration-200 transform hover:scale-105 active:scale-95 flex items-center justify-center min-w-[120px]"
               onClick={() => handleManualSlide('left')}
             >
-              &larr; Left
+              &larr;
             </button>
             <button
-              className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-full shadow-md transition-all duration-200 transform hover:scale-105 active:scale-95 flex items-center justify-center min-w-[120px]"
+              className="bg-transparent hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-full shadow-md transition-all duration-200 transform hover:scale-105 active:scale-95 flex items-center justify-center min-w-[120px]"
               onClick={() => handleManualSlide('right')}
             >
-              Right &rarr;
+              &rarr;
             </button>
           </div>
           <div className="relative overflow-hidden w-full h-[500px] mt-10 p-4  rounded-xl bg-transparent">
@@ -203,7 +201,7 @@ export default function Carousel({ initialPokemons = [] }) {
                     className={`absolute top-1/2 left-1/2 w-[300px]  rounded-2xl shadow-xl overflow-hidden will-change-transform ${show ? 'block' : 'hidden'} ${animationClass}`}
                   >
                     <div
-                      className={` bg-white w-full cursor-pointer hover:opacity-90 transition-opacity`}
+                      className={`${index !== current ? 'bg-white' : 'bg-transparent'} w-full cursor-pointer hover:opacity-90 transition-opacity`}
                     >
                       <Image
                         src={pokemon.image}
@@ -214,7 +212,9 @@ export default function Carousel({ initialPokemons = [] }) {
                       />
                     </div>
 
-                    <div className="flex flex-row mt-auto items-end self-start p-4 bg-white">
+                    <div
+                      className={`flex flex-row mt-auto items-end self-start p-4 ${index === current ? 'bg-transparent' : 'bg-white bg-opacity-80'}`}
+                    >
                       <div>
                         <h3 className={`text-md font-semibold text-gray-900`}>
                           <span aria-hidden="true" className={` absolute inset-0 `}></span>
