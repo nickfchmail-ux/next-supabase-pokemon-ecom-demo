@@ -154,7 +154,7 @@ export default function Carousel({ initialPokemons = [] }) {
             variants={headingVariants}
             className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl text-center pt-5"
           >
-            Featured Pokémon
+            Pokémon - on sale
           </motion.h2>
           <div className="flex justify-between items-center gap-10 mt-5 pb-0">
             <button
