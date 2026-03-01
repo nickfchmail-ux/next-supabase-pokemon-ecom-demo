@@ -41,7 +41,7 @@ AI Features: DeepSeek API (chat bot)
 | 3 | Stripe Payments      | Real online checkout – learned from docs + YouTube                          | ![Payment](image-2.png)         |
 | 4 | Live Chat (Socket.io)| Anonymous realtime chat, saved to Supabase if logged in                    | ![Chat](image-8.png)            |
 | 5 | Live User Tracking   | Shows online users in realtime via Supabase                                 | ![Tracking](image-11.png)       |
-| 6 | AI Chat Bot          | 24/7 sales assistant – suggests Pokémon in JSON, remembers preferences     |
+| 6 | AI Chat Bot          | 24/7 sales assistant – suggests Pokémon in JSON, remembers preferences     | ![Tracking](image-14.png) ![Tracking](image-16.png) |
 
 ## Screenshots Overview
 
