@@ -43,16 +43,6 @@ AI Features: DeepSeek API (chat bot)
 | 5 | Live User Tracking   | Shows online users in realtime via Supabase                                 | ![Tracking](image-11.png)       |
 | 6 | AI Chat Bot          | 24/7 sales assistant – suggests Pokémon in JSON, remembers preferences     | ![Tracking](image-14.png) ![Tracking](image-16.png) |
 
-## Screenshots Overview
-
-<table>
-  <tr>
-    <td><img src="image-5.png" alt="Home Page" width="220"/></td>
-    <td><img src="image-6.png" alt="About Page" width="220"/></td>
-    <td><img src="image-7.png" alt="Product Grid" width="220"/></td>
-    <td><img src="image.png" alt="Tailwind UI Example" width="220"/></td>
-  </tr>
-</table>
 
 
 
