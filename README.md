@@ -1,5 +1,9 @@
 # Poke 芒 – Pokémon E-commerce
 
+
+<video controls src="pokemon-next-supabase-demo.mp4" title="Title"></video>
+
+
 Pokémon-themed online shop with a **web version** (Next.js) and **mobile app** (React Native).
 One project, two platforms – built to deliver fun shopping on desktop and on the go!
 
@@ -13,32 +17,29 @@ Live demo (Web): https://next-pokemon-ecom-demo.vercel.app/
 
 ## Key Tech Stack
 
-| Category       | Web (Next.js)                          | Mobile (React Native)             |
-|----------------|----------------------------------------|-----------------------------------|
-| Framework      | Next.js                                | React Native + Expo Router        |
-| State          | Redux, TanStack Query                  | Redux              |
-| Backend        | Supabase (DB + realtime)               | Supabase                          |
-| Auth           | NextAuth                               |   Supabase auth         |
-| Payments       | Stripe                                 | Stripe             |
-| Chat           | Supabase realtime                            |  Supabase realtime            |
-| Styling        | Tailwind CSS                           | NativeWind         |
-| AI Features    | DeepSeek API (chat bot)       | DeepSeek API (chat bot)          |
+|----------------|----------------------------------------|
+| Framework      | Next.js                                |
+| State          | Redux, TanStack Query                  |
+| Backend        | Supabase (DB + realtime)               |
+| Auth           | NextAuth                               |
+| Payments       | Stripe                                 |
+| Chat           | Supabase realtime                      |
+| Styling        | Tailwind CSS                           |
+| AI Features    | DeepSeek API (chat bot)                |
 
 ## Main Features
 
-| # | Feature              | Description                                                                 | Web Screenshot                  | Mobile Screenshot               |
-|---|----------------------|-----------------------------------------------------------------------------|---------------------------------|---------------------------------|
-| 1 | Stripe               | Payments    | ![Stripe](image-2.png)                                                      | in-progress                          |
-| 2 | User Profile         | Update info with TanStack Query mutations & loading states                  | ![Profile](image-4.png)        | in-progress              |
-| 3 | Infinite Scrolling   | Lazy-load products like YouTube using TanStack Query                        | ![Shop](image-3.png)            | ![Shop](shop.jpg)               |
-| 4 | Stripe Payments      | Real online checkout – learned from docs + YouTube                          | ![Payment](image-2.png)         | In progress                 |
-| 5 | Live Chat (Socket.io)| Anonymous realtime chat, saved to Supabase if logged in                    | ![Chat](image-8.png)            | In-progress    |
-| 6 | Live User Tracking   | Shows online users in realtime via Supabase                                 | ![Tracking](image-11.png)       | In-progress           |
-| 7 | AI Chat Bot          | 24/7 sales assistant – suggests Pokémon in JSON, remembers preferences     | ![AI Bot](image-14.png) ![History](image-16.png) | In-progress     |
+| # | Feature              | Description                                                                 | Web Screenshot                  |
+|---|----------------------|-----------------------------------------------------------------------------|---------------------------------|
+| 1 | Stripe               | Payments    | ![Stripe](image-2.png)                                                      |
+| 2 | User Profile         | Update info with TanStack Query mutations & loading states                  | ![Profile](image-4.png)        |
+| 3 | Infinite Scrolling   | Lazy-load products like YouTube using TanStack Query                        | ![Shop](image-3.png)            |
+| 4 | Stripe Payments      | Real online checkout – learned from docs + YouTube                          | ![Payment](image-2.png)         |
+| 5 | Live Chat (Socket.io)| Anonymous realtime chat, saved to Supabase if logged in                    | ![Chat](image-8.png)            |
+| 6 | Live User Tracking   | Shows online users in realtime via Supabase                                 | ![Tracking](image-11.png)       |
+| 7 | AI Chat Bot          | 24/7 sales assistant – suggests Pokémon in JSON, remembers preferences     |
 
 ## Screenshots Overview
-
-### Web Version
 
 <table>
   <tr>
@@ -49,16 +50,7 @@ Live demo (Web): https://next-pokemon-ecom-demo.vercel.app/
   </tr>
 </table>
 
-### Mobile Version
 
-<table>
-  <tr>
-    <td><img src="favorites.jpg" alt="Favorites" width="220"/></td>
-    <td><img src="about.jpg" alt="About" width="220"/></td>
-    <td><img src="shop.jpg" alt="Shop" width="220"/></td>
-    <td><img src="cart.jpg" alt="Cart" width="220"/></td>
-  </tr>
-</table>
 
 
 
