@@ -1,7 +1,7 @@
 import { Plus } from 'lucide-react';
 import Link from 'next/link';
-import { Button } from '../../_componentAPI/button';
 import ProductSearchTable from '../../_component/admin/Products/ProductSearchTable';
+import { Button } from '../../_componentAPI/button';
 import { getAllProducts } from '../../_lib/admin-data-service';
 
 export const metadata = {
