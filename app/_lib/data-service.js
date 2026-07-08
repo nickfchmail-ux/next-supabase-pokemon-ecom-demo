@@ -1,6 +1,66 @@
 import { auth } from './auth';
 import { supabase } from './supabase';
 
+// ──────────────────────────────────────────────────────────────────
+// Auto-migration: ensure members.role column exists
+// Runs once per cold start — idempotent, safe to call repeatedly.
+// Uses SUPABASE_SECRET_KEY to execute DDL.
+// ──────────────────────────────────────────────────────────────────
+let migrationDone = false;
+
+export async function ensureRoleColumn() {
+  if (migrationDone) return;
+  try {
+    // Test if role column exists by selecting it
+    const { error } = await supabase
+      .from('members')
+      .select('role')
+      .limit(1);
+
+    if (!error) {
+      migrationDone = true;
+      return; // Column already exists
+    }
+
+    // Column missing — add it via raw SQL using the REST API
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_SUPABASE_URL}/rest/v1/rpc/alter_members_add_role`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          apikey: process.env.SUPABASE_SECRET_KEY,
+          Authorization: `Bearer ${process.env.SUPABASE_SECRET_KEY}`,
+        },
+      }
+    );
+
+    // If the RPC doesn't exist yet, column will need to be added manually.
+    // The app won't crash — getUser() simply won't return the role field.
+    if (!res.ok) {
+      console.warn(
+        '╔══════════════════════════════════════════════════════════════╗\n' +
+        '║  members.role COLUMN NOT FOUND                              ║\n' +
+        '║  Run this SQL in your Supabase dashboard:                   ║\n' +
+        '║                                                            ║\n' +
+        '║  ALTER TABLE members                                       ║\n' +
+        '║    ADD COLUMN IF NOT EXISTS role text                       ║\n' +
+        '║    DEFAULT \'customer\'                                       ║\n' +
+        '║    CHECK (role IN (\'customer\',\'admin\',\'superadmin\'));        ║\n' +
+        '║                                                            ║\n' +
+        '║  UPDATE members SET role = \'admin\'                          ║\n' +
+        '║    WHERE email = \'<YOUR_EMAIL>\';                             ║\n' +
+        '╚══════════════════════════════════════════════════════════════╝'
+      );
+    } else {
+      migrationDone = true;
+    }
+  } catch (err) {
+    // Silently fail — the warning above covers it
+    console.warn('Could not auto-migrate members.role column:', err);
+  }
+}
+
 export async function getPokemons() {
   const { data, count, error } = await supabase.from('pokemons').select('* , pokemons_selling(*)');
 

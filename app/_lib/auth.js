@@ -1,9 +1,10 @@
 import NextAuth from 'next-auth';
 import Google from 'next-auth/providers/google';
-import { createMember, getUser } from './data-service';
+import { createMember, ensureRoleColumn, getUser } from './data-service';
+import { supabase } from './supabase';
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
-  trustHost: true, // Add this back—critical for Vercel
+  trustHost: true,
   providers: [
     Google({
       clientId: process.env.GOOGLE_CLIENT_ID,
@@ -21,11 +22,9 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         sameSite: 'lax',
         path: '/',
         secure: true,
-        // Remove domain entirely—no need for single-domain Vercel apps
       },
     },
     state: {
-      // Add this to match and avoid state mismatches
       name: '__Secure-authjs.state',
       options: {
         httpOnly: true,
@@ -36,12 +35,15 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     },
   },
   callbacks: {
-    async authorized({ auth, request }) {
+    async authorized({ auth }) {
       return !!auth?.user;
     },
 
     async signIn({ user, profile }) {
       try {
+        // Ensure the members.role column exists before querying it
+        await ensureRoleColumn();
+
         let existingMember = await getUser(user.email);
 
         if (!existingMember) {
@@ -56,8 +58,16 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           });
         }
 
+        // Look up role directly from members table (SECRET_KEY bypasses RLS)
+        const { data: member } = await supabase
+          .from('members')
+          .select('role')
+          .eq('email', user.email)
+          .single();
+
         user.id = existingMember.id;
         user.image = existingMember.image;
+        user.role = member?.role || 'customer';
         return true;
       } catch (error) {
         console.error('Error during signIn callback:', error);
@@ -65,18 +75,22 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       }
     },
 
-    // Store custom data (like DB id) in the JWT token
-    async jwt({ token, user }) {
+    async jwt({ token, user, trigger, session }) {
       if (user?.id) {
         token.id = user.id;
+        token.role = user.role || 'customer';
+      }
+      // Allow client-side session updates to sync role changes
+      if (trigger === 'update' && session?.role) {
+        token.role = session.role;
       }
       return token;
     },
 
-    // Enrich the session with data from the token (safe & fast, no DB call)
     async session({ session, token }) {
       if (token?.id) {
         session.user.id = token.id;
+        session.user.role = token.role || 'customer';
       }
       return session;
     },

@@ -218,6 +218,7 @@ export default function ChatWindow({
         <button
           className={`absolute bottom-0 right-0 cursor-pointer`}
           onClick={() => setExtendWindow(!extendWindow)}
+          suppressHydrationWarning
         >
           {extendWindow ? (
             <CompressIcon sx={{ fontSize: 15 }} />
