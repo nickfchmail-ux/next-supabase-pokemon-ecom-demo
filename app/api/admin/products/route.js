@@ -43,28 +43,15 @@ export async function PUT(request) {
 
   try {
     const body = await request.json();
-    const {
-      id,
-      name,
-      species,
-      price,
-      hp,
-      attack,
-      defense,
-      special_attack,
-      special_defense,
-      speed,
-      description,
-    } = body;
+    const { id, name, species, price, hp, attack, defense, special_attack, special_defense, speed, description, image } = body;
 
-    // species is text[] in Supabase — send directly as JS array
-    // description comes as a string from the form — wrap in array for text[]
     const { data: pokemon, error: pokemonError } = await supabase
       .from('pokemons')
       .update({
         name,
         species,
         descriptions: Array.isArray(description) ? description : [description],
+        image: image || '',
         hp,
         attack,
         defense,
