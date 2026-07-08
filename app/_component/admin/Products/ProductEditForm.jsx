@@ -27,6 +27,7 @@ const pokemonManageSchema = z.object({
   special_defense: z.number().int().min(1).max(255),
   speed: z.number().int().min(1).max(255),
   description: z.string().min(10, 'Please provide a robust product listing description'),
+  image: z.string().optional(),
 });
 
 const ALL_SPECIES = [
@@ -94,6 +95,7 @@ export default function ProductEditForm({ product, isNew = false }) {
       special_defense: product?.special_defense || 50,
       speed: product?.speed || 50,
       description: initialDescriptions.join('\n\n'),
+      image: product?.image || '',
     },
   });
 
@@ -135,8 +137,17 @@ export default function ProductEditForm({ product, isNew = false }) {
     try {
       // Send descriptions as an array (one entry per paragraph)
       const payload = {
-        ...data,
-        descriptions: descriptionFields.filter((d) => d.trim() !== ''),
+        name: data.name,
+        species: data.species,
+        price: data.price,
+        hp: data.hp,
+        attack: data.attack,
+        defense: data.defense,
+        special_attack: data.special_attack,
+        special_defense: data.special_defense,
+        speed: data.speed,
+        description: descriptionFields.filter((d) => d.trim() !== ''),
+        image: data.image || '',
       };
       const res = await fetch('/api/admin/products', {
         method: isNew ? 'POST' : 'PUT',
@@ -418,24 +429,46 @@ export default function ProductEditForm({ product, isNew = false }) {
                 </div>
               )}
 
-              {/* Upload area */}
-              <div className="border-2 border-dashed border-slate-300 rounded-xl p-8 text-center hover:border-purple-400 transition-colors cursor-pointer">
+              {/* Upload area with real Supabase Storage integration */}
+              <input
+                type="file"
+                accept="image/png,image/jpeg,image/webp"
+                className="hidden"
+                id="file-upload"
+                onChange={async (e) => {
+                  const file = e.target.files?.[0];
+                  if (!file) return;
+                  setSaving(true);
+                  try {
+                    const formData = new FormData();
+                    formData.append('image', file);
+                    const res = await fetch('/api/admin/upload', { method: 'POST', body: formData });
+                    if (!res.ok) throw new Error('Upload failed');
+                    const { url } = await res.json();
+                    setValue('image', url);
+                    // Show preview by refreshing
+                    router.refresh();
+                  } catch (err) {
+                    alert('Image upload failed: ' + err.message);
+                  } finally {
+                    setSaving(false);
+                  }
+                }}
+              />
+              <div
+                className="border-2 border-dashed border-slate-300 rounded-xl p-8 text-center hover:border-purple-400 transition-colors cursor-pointer"
+                onClick={() => document.getElementById('file-upload')?.click()}
+              >
                 <Upload size={32} className="mx-auto text-slate-300 mb-3" />
                 <p className="text-sm text-slate-500">
-                  Drag & drop a Pokémon image here, or click to browse
+                  Click to upload a Pokémon image
                 </p>
                 <p className="text-xs text-slate-400 mt-1">PNG, JPG, or WebP up to 5 MB</p>
-                <input
-                  type="file"
-                  accept="image/png,image/jpeg,image/webp"
-                  className="hidden"
-                  id="file-upload"
-                />
                 <Button
                   variant="outline"
                   size="sm"
                   className="mt-4"
-                  onClick={() => document.getElementById('file-upload')?.click()}
+                  type="button"
                 >
                   <ImageIcon size={14} className="mr-1.5" />
                   Choose File
