@@ -44,7 +44,7 @@ AI Features: DeepSeek API (chat bot)
 | 4 | Live Chat (Socket.io)| Anonymous realtime chat, saved to Supabase if logged in                    | ![Chat](image-8.png)            |
 | 5 | Live User Tracking   | Shows online users in realtime via Supabase                                 | ![Tracking](image-11.png)       |
 | 6 | AI Chat Bot          | 24/7 sales assistant – suggests Pokémon in JSON, remembers preferences     | ![Tracking](image-14.png) ![Tracking](image-16.png) |
-| 7 | Admin Portal         | Full RBAC dashboard — manage products, orders, users, analytics            | ![Admin](image-admin.png)      |
+| 7 | Admin Portal         | Full RBAC dashboard — manage products, orders, users, analytics            | ![Dashboard](pokemon-admin-portal-dashboard.png)  ![Inventory](pokemon-admin-portal-inventory-table-overview.png)  ![Edit](pokemon-admin-portal-inventory-edit-details-1.png) |
 
 ---
 
@@ -68,10 +68,11 @@ All admin routes are protected at three layers:
 2. **Layout guard** (`admin/layout.js`) — server-rendered redirect
 3. **HOC** (`admin-auth.js`) — `withAdminAuth()` wrapper for individual pages
 
-> **📸 Screenshots**: Add your admin portal screenshots here as `image-admin.png`, `image-admin-products.png`, etc.
-> | Dashboard | Inventory | Product Edit | Orders |
-> |-----------|-----------|-------------|--------|
-> | ![Admin](image-admin.png) | ![Products](image-admin-products.png) | ![Edit](image-admin-edit.png) | ![Orders](image-admin-orders.png) |
+### Admin Portal Screenshots
+
+| Dashboard | Inventory Table | Edit Details |
+|-----------|----------------|--------------|
+| ![Dashboard](pokemon-admin-portal-dashboard.png) | ![Inventory](pokemon-admin-portal-inventory-table-overview.png) | ![Edit](pokemon-admin-portal-inventory-edit-details-1.png) |
 
 ---
 
