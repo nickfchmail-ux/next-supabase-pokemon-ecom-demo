@@ -41,8 +41,7 @@ export default async function RootLayout({ children }) {
           <ReactQueryDevtools initialIsOpen={false} />
           <Toaster />
           <Nav />
-
-          <main className="bg-primary-950 flex-1 ">
+          <main className="bg-primary-950 flex-1">
             <ChatBox />
             <div className="max-w-7xl mx-auto bg-primary-800 md:max-w-[90vw]">{children}</div>
           </main>

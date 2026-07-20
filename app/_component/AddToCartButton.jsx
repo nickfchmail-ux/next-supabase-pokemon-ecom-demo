@@ -3,8 +3,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { addToCart } from '../_state/_global/cart/CartSlice';
 
-
-
 export default function AddToCart({ id, view }) {
   const dispatch = useDispatch();
   const hasAlreadyAddToCart =
@@ -14,13 +12,16 @@ export default function AddToCart({ id, view }) {
 
   return (
     <button
-      className={`  text-primary-200 px-3 py-1 rounded-sm shadow-md hover:bg-primary-600 ${view?.toLowerCase() === 'detail' ? 'bg-primary-400' : 'bg-gray-700'}`}
+      className={`w-full py-3 rounded-xl font-semibold text-sm transition-all active:scale-[0.98] ${
+        view?.toLowerCase() === 'detail'
+          ? 'bg-gray-900 text-white hover:bg-gray-800 shadow-sm px-8 py-3.5 text-base rounded-xl font-semibold transition-all active:scale-[0.98]'
+          : 'bg-gray-700 text-primary-200 px-3 py-1 rounded-sm shadow-md hover:bg-primary-600'
+      }`}
       onClick={() => {
-        console.log('click!');
         dispatch(addToCart({ id: id }));
       }}
     >
-      Add
+      Add to Cart
     </button>
   );
 }

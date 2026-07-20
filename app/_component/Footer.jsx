@@ -7,13 +7,13 @@ function Footer() {
         <div className={`flex`}>
           Follow us:{' '}
           <a href="https://twitter.com" style={{ color: 'white', margin: '0 5px' }}>
-            <img src="x-icon.png" alt="Twitter" width="30" />
+            <img src="/x-icon.png" alt="Twitter" width="30" />
           </a>
           <a href="https://instagram.com" style={{ color: 'white', margin: '0 5px' }}>
-            <img src="instagram-icon.png" alt="Instagram" width="30" />
+            <img src="/instagram-icon.png" alt="Instagram" width="30" />
           </a>
           <a href="https://facebook.com" style={{ color: 'white', margin: '0 5px' }}>
-            <img src="facebook-icon.png" alt="Facebook" width="30" />
+            <img src="/facebook-icon.png" alt="Facebook" width="30" />
           </a>
         </div>
         <p className={`font-extrabold`}>
