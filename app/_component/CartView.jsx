@@ -8,7 +8,7 @@ export default function CartView({ children }) {
   const { cartFromDatabase, user } = children;
 
   return (
-    <div className="h-screen flex flex-col overflow-hidden bg-gray-50">
+    <div className="min-h-screen flex flex-col overflow-hidden bg-gray-50 md:h-screen md:overflow-hidden">
       {/* Page Header — shrink-0 keeps it from compressing */}
       <div className="bg-white border-b border-gray-200 shrink-0">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5">
