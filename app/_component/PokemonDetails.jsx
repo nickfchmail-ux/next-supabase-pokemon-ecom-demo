@@ -47,12 +47,8 @@ export default function PokemonDetails({ selectedPokemon, cartData }) {
 
   const borderColors = typeColors[primaryType] || typeColors.normal;
   const cart = useSelector((state) => state.cart.cart);
-  const {
-    mutate: updatePokemon,
-    isPending,
-    isError,
-    error: updateError,
-  } = useMutation({
+
+  const { mutate: updatePokemon } = useMutation({
     mutationFn: updateCartItemsAction,
     onSuccess: (data) => {
       console.log(data);
@@ -81,13 +77,31 @@ export default function PokemonDetails({ selectedPokemon, cartData }) {
   }, [cart]);
 
   return (
-    <UserCursor name="Adopt Me" color={borderColors.color} textColor="#FFFFFF" size={28} showLabel={true}>
+    <UserCursor
+      name="Adopt Me"
+      color={borderColors.color}
+      textColor="#FFFFFF"
+      size={28}
+      showLabel={true}
+    >
       <div className="min-h-screen bg-white">
         {/* Top bar — sticky */}
         <div className="sticky top-0 z-20 flex items-center justify-between px-4 py-3 border-b border-gray-100 bg-white/95 backdrop-blur md:px-8">
           <BackButton />
           <div className="flex-1 flex justify-center overflow-hidden mx-4">
-            <ScrambleText words="Find Your Partner" color="#9CA3AF" fontSize={12} fontWeight={600} letterSpacing="0.15em" textAlign="center" enterMode="oneLine" enterDuration={1.5} enterScrambleIntensity={40} enterReplay={true} style={{ width: "auto" }} />
+            <ScrambleText
+              words="Find Your Partner"
+              color="#9CA3AF"
+              fontSize={12}
+              fontWeight={600}
+              letterSpacing="0.15em"
+              textAlign="center"
+              enterMode="oneLine"
+              enterDuration={1.5}
+              enterScrambleIntensity={40}
+              enterReplay={true}
+              style={{ width: 'auto' }}
+            />
           </div>
           <div className="w-8" />
         </div>
@@ -102,8 +116,8 @@ export default function PokemonDetails({ selectedPokemon, cartData }) {
                 <Image
                   key={`${spec}-icon`}
                   src={`/${spec}.png`}
-                  width={36}
-                  height={36}
+                  width={56}
+                  height={56}
                   alt={spec}
                   className="drop-shadow-md"
                 />
