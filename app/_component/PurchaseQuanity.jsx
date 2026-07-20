@@ -11,11 +11,9 @@ export default function PurchaseQuanity({ id, view }) {
   if (!purchaseQuantity) return null;
 
   return (
-    <span
-      className={`w-max ${view?.toLowerCase() !== 'cart' ? 'absolute top-2 left-2' : ''} text-primary-800`}
-    >
-      Qty.
-      <span className={`text-blue-500`}> {purchaseQuantity}</span>
+    <span className="inline-flex items-center gap-1 text-sm font-medium text-gray-700">
+      <span className="text-gray-400">Qty:</span>
+      <span className="text-gray-900 font-semibold">{purchaseQuantity}</span>
     </span>
   );
 }

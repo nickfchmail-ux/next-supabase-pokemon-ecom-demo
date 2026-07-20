@@ -117,6 +117,23 @@ const nextConfig = {
     ],
     formats: ['image/avif', 'image/webp'],
   },
+
+  // Prevent webpack Watchpack from scanning D:\ drive system files
+  webpack: (config, { dev }) => {
+    if (dev) {
+      config.watchOptions = {
+        poll: false,
+        ignored: [
+          'D:/DumpStack.log.tmp',
+          'D:/System Volume Information',
+          'D:/WindowsApps',
+          'D:/pagefile.sys',
+          '**/node_modules',
+        ],
+      };
+    }
+    return config;
+  },
 };
 
 module.exports = nextConfig;
