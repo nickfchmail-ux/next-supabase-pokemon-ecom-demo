@@ -50,7 +50,7 @@ export default function SellingPointsRotator({ features = [] }) {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -20 }}
           transition={{ duration: 0.4 }}
-          className="max-w-xl text-center sm:text-left min-h-[120px]"
+          className="max-w-xl text-center sm:text-left h-[200px] md:h-auto"
         >
           <dt className="mb-3 h-[60px] flex items-end">
             <ScrambleText
