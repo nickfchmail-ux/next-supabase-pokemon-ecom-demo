@@ -33,13 +33,13 @@ export default function CartItem({ item, isInView, ref }) {
           </div>
         </div>
 
-        <div className="flex items-center justify-between mt-3">
+        <div className="flex flex-wrap items-center justify-between gap-2 mt-3">
           <div className="flex items-center gap-3">
             <AmendCartQuanityButton id={item?.id} view={'mobile'} />
             <PurchaseQuanity id={item?.id} view={'Cart'} />
           </div>
-          <div className="flex items-baseline gap-2">
-            <span className="text-xs text-gray-400 line-through">
+          <div className="flex items-baseline gap-1.5 sm:gap-2">
+            <span className="text-[10px] sm:text-xs text-gray-400 line-through">
               ${item.pokemons_selling?.regular_price}
             </span>
             <Price
