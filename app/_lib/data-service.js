@@ -80,6 +80,7 @@ export async function getPokemonById(id) {
     .single();
 
   if (error) {
+    if (error.code === 'PGRST116') return null;
     console.error(error);
     throw new Error(error.message || 'Failed to get pokemon');
   }

@@ -52,11 +52,6 @@ export default function Page() {
     setPokemonsPromise(getPokemonAction());
   }, []);
 
-  // Force re-fetch on each page mount (handles browser back/forward)
-  useEffect(() => {
-    setKey((k) => k + 1);
-  }, []);
-
   return (
     <div className="min-h-full bg-white">
       {/* Hero Section */}

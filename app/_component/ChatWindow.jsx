@@ -80,14 +80,15 @@ export default function ChatWindow({
   });
 
   const { mutateAsync: sendQueryToDeepSeek, isPending: isSendingDeepSeekQuery } = useMutation({
-    mutationFn: (content) => deepSeekApiQuery(content),
+    mutationFn: (content) => deepSeekApiQuery(content, aiQuery.slice(-5)),
     onSuccess: (data, content) => {
       queryClient.setQueryData(['deepseek-response', content], data);
-      // Replace pending skeleton with real response
+      // Replace pending skeleton with streaming response
       setAiQuery((prev) =>
         prev.map((item) =>
-          // Rough check: if this item looks like our pending skeleton
-          item.question === content && item.isPending ? data : item
+          item.question === content && item.isPending
+            ? { ...data, isStreaming: true, isPending: false }
+            : item
         )
       );
     },

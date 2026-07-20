@@ -1,5 +1,6 @@
 import { useRouter } from 'next/navigation';
 import { useEffect, useRef } from 'react';
+import StreamingChatResponse from './StreamingChatResponse';
 
 export default function AiChatRoom({ aiQuery, setAiQuery, isPending }) {
   const scrollContainerRef = useRef(null);
@@ -53,7 +54,21 @@ export default function AiChatRoom({ aiQuery, setAiQuery, isPending }) {
                   <strong className={`pt-2`}>:</strong>
                 </div>
 
-                <div className="wrap-break-words whitespace-pre-wrap mb-2">{response.text}</div>
+                {msg.isPending || msg.isStreaming ? (
+                  <StreamingChatResponse text={typeof response.text === 'string' ? response.text : ''} />
+                ) : (
+                  <div className="wrap-break-words whitespace-pre-wrap mb-2">
+                    {typeof response.text === 'string' ? (
+                      msg.isStreaming ? (
+                        <StreamingChatResponse text={response.text} speed={20} />
+                      ) : (
+                        response.text
+                      )
+                    ) : (
+                      response.text
+                    )}
+                  </div>
+                )}
                 <div className={`flex flex-col gap-1`}>
                   {response.suggestion.length > 0
                     ? response.suggestion.map((sug, i) => {
