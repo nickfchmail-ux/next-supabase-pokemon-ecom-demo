@@ -79,7 +79,7 @@ export default function CartList({ cartData }) {
   return (
     <div
       ref={containerViewCheckPort}
-      className="flex flex-col overflow-y-scroll overflow-x-hidden space-y-2.5"
+      className="flex flex-col space-y-2.5"
     >
       <AnimatePresence>
         {selectedPokemons.map((selectedPokemon) => (
