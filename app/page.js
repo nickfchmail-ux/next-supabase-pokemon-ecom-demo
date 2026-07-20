@@ -4,6 +4,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Suspense, use, useEffect, useState } from 'react';
 import Carousel from './_component/home/Caurosel';
+import SellingPointsRotator from './_component/SellingPointsRotator';
+import SpinImage from './_component/SpinImage';
 import { getPokemonAction } from './_lib/actions';
 const container = {
   hidden: { opacity: 0 },
@@ -149,9 +151,8 @@ export default function Page() {
             </motion.p>
           </div>
           <div className="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-4xl">
-            <dl className="grid max-w-xl grid-cols-1 gap-x-8 gap-y-10 lg:max-w-none lg:grid-cols-2 lg:gap-y-16">
-              {/* Each feature item fades in sequentially */}
-              {[
+            <SellingPointsRotator
+              features={[
                 {
                   title: 'Ethically Sourced',
                   desc: 'All our Pokémon are raised with care and love...',
@@ -159,18 +160,8 @@ export default function Page() {
                 { title: 'Fast & Safe Delivery', desc: 'Your new companion will be delivered...' },
                 { title: 'Expert Support', desc: 'Our team of Pokémon experts is here...' },
                 { title: '24/7 Adventure Support', desc: 'Our support team is available 24/7...' },
-              ].map((feature) => (
-                <motion.div key={feature.title} variants={itemFadeUp} className="relative pl-16">
-                  <dt className="text-base font-semibold leading-7 text-gray-900">
-                    <div className="absolute left-0 top-0 flex h-10 w-10 items-center justify-center rounded-lg bg-indigo-600">
-                      {/* SVG icons unchanged */}
-                    </div>
-                    {feature.title}
-                  </dt>
-                  <dd className="mt-2 text-base leading-7 text-gray-600">{feature.desc}</dd>
-                </motion.div>
-              ))}
-            </dl>
+              ]}
+            />
           </div>
         </div>
       </motion.section>
@@ -219,13 +210,25 @@ export default function Page() {
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 1, delay: 0.3 }}
-              className="relative mt-16 h-80 lg:mt-8"
+              className="relative mt-16 h-80 lg:mt-8 lg:h-96 lg:w-96 bg-transparent"
             >
-              <Image
-                className="absolute left-0 top-0 w-[57rem] max-w-none rounded-md bg-white/5 ring-1 ring-white/10"
-                src="https://img.pokemondb.net/artwork/large/charizard.jpg"
-                alt="Charizard"
-                fill
+              <SpinImage
+                images={[
+                  'https://ntcfaqkdafuaxfxoweab.supabase.co/storage/v1/object/public/pokemons/home_page_img/ball.jpg  ',
+                  'https://ntcfaqkdafuaxfxoweab.supabase.co/storage/v1/object/public/pokemons/home_page_img/pokemon-30th.jpg',
+                  'https://ntcfaqkdafuaxfxoweab.supabase.co/storage/v1/object/public/pokemons/home_page_img/pokemon_champions.jpg',
+                  'https://ntcfaqkdafuaxfxoweab.supabase.co/storage/v1/object/public/pokemons/home_page_img/pokemon_clothes.jpg',
+                  'https://ntcfaqkdafuaxfxoweab.supabase.co/storage/v1/object/public/pokemons/home_page_img/pokemon_logo.jpg',
+                  'https://ntcfaqkdafuaxfxoweab.supabase.co/storage/v1/object/public/pokemons/home_page_img/pokemon_toys.jpg',
+                  'https://ntcfaqkdafuaxfxoweab.supabase.co/storage/v1/object/public/pokemons/home_page_img/pokemons.jpg',
+                  'https://ntcfaqkdafuaxfxoweab.supabase.co/storage/v1/object/public/pokemons/home_page_img/pokemons_origin.jpg',
+                ]}
+                imageWidth={120}
+                imageHeight={120}
+                speed={2}
+                xCurve={60}
+                yCurve={-45}
+                rounded={8}
               />
             </motion.div>
           </div>
