@@ -73,6 +73,9 @@ export async function getPokemons() {
 }
 
 export async function getPokemonById(id) {
+  if (!id || typeof id !== 'string') {
+    throw new Error(`Invalid Pokémon ID: ${id}`);
+  }
   const { data, error } = await supabase
     .from('pokemons')
     .select('* , pokemons_selling(*)')

@@ -150,6 +150,7 @@ export async function getAllProducts() {
 }
 
 export async function getProductById(id) {
+  if (!id || typeof id !== 'string') throw new Error('Invalid product ID');
   await requireAdmin();
   const { data, error } = await supabase
     .from('pokemons')

@@ -2,6 +2,9 @@ import { notFound } from 'next/navigation';
 import ProductEditForm from '../../../_component/admin/Products/ProductEditForm';
 import { getProductById } from '../../../_lib/admin-data-service';
 
+export const dynamic = 'force-dynamic';
+export const dynamicParams = false;
+
 export async function generateMetadata({ params }) {
   const { id } = await params;
   try {
