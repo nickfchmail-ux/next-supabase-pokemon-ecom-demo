@@ -223,7 +223,7 @@ export default function Carousel({ initialPokemons = [] }) {
                         <p className="mt-1 text-sm text-gray-500 flex gap-2">
                           {pokemon.species.map((type) => (
                             <Image
-                              src={`/${type}.png`}
+                              src={`/${type.toLowerCase()}.png`}
                               alt={type}
                               width={70}
                               height={50}

@@ -63,7 +63,7 @@ export default function TagFilter({ expand, specialSpecies, view, onClose }) {
             alt={tag}
             width={100}
             height={100}
-            src={`/${tag}.png`}
+            src={`/${tag.toLowerCase()}.png`}
             onClick={() => toggleTag(tag)}
             className={` rounded cursor-pointer z-10000 ${
               currentTags.includes(tag)

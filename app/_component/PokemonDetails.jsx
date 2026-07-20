@@ -115,7 +115,7 @@ export default function PokemonDetails({ selectedPokemon, cartData }) {
               {Array.from(unitedSpecies).map((spec) => (
                 <Image
                   key={`${spec}-icon`}
-                  src={`/${spec}.png`}
+                  src={`/${spec.toLowerCase()}.png`}
                   width={56}
                   height={56}
                   alt={spec}
