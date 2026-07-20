@@ -71,7 +71,9 @@ export async function getTopProducts(limit = 10) {
   if (productError) throw new Error(productError.message);
 
   const productMap = {};
-  (products || []).forEach((p) => { productMap[p.id] = p.name; });
+  (products || []).forEach((p) => {
+    productMap[p.id] = p.name;
+  });
 
   return topIds.map((id) => ({
     name: productMap[id] || `#${id}`,

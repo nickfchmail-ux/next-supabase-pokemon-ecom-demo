@@ -23,7 +23,9 @@ export default function CartView({ children }) {
       <div className="flex-1 overflow-hidden max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 w-full">
         <div className={`h-full ${hasCartItem ? 'lg:grid lg:grid-cols-12 lg:gap-8' : ''}`}>
           {/* Cart Items — scrollable column */}
-          <div className={`${hasCartItem ? 'lg:col-span-8 h-full overflow-y-auto pr-1 space-y-4' : ''}`}>
+          <div
+            className={`${hasCartItem ? 'lg:col-span-8 h-full overflow-y-auto pr-1 space-y-4' : ''}`}
+          >
             <CartList cartData={cartFromDatabase} />
           </div>
 

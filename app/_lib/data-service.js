@@ -12,10 +12,7 @@ export async function ensureRoleColumn() {
   if (migrationDone) return;
   try {
     // Test if role column exists by selecting it
-    const { error } = await supabase
-      .from('members')
-      .select('role')
-      .limit(1);
+    const { error } = await supabase.from('members').select('role').limit(1);
 
     if (!error) {
       migrationDone = true;
@@ -40,17 +37,17 @@ export async function ensureRoleColumn() {
     if (!res.ok) {
       console.warn(
         '╔══════════════════════════════════════════════════════════════╗\n' +
-        '║  members.role COLUMN NOT FOUND                              ║\n' +
-        '║  Run this SQL in your Supabase dashboard:                   ║\n' +
-        '║                                                            ║\n' +
-        '║  ALTER TABLE members                                       ║\n' +
-        '║    ADD COLUMN IF NOT EXISTS role text                       ║\n' +
-        '║    DEFAULT \'customer\'                                       ║\n' +
-        '║    CHECK (role IN (\'customer\',\'admin\',\'superadmin\'));        ║\n' +
-        '║                                                            ║\n' +
-        '║  UPDATE members SET role = \'admin\'                          ║\n' +
-        '║    WHERE email = \'<YOUR_EMAIL>\';                             ║\n' +
-        '╚══════════════════════════════════════════════════════════════╝'
+          '║  members.role COLUMN NOT FOUND                              ║\n' +
+          '║  Run this SQL in your Supabase dashboard:                   ║\n' +
+          '║                                                            ║\n' +
+          '║  ALTER TABLE members                                       ║\n' +
+          '║    ADD COLUMN IF NOT EXISTS role text                       ║\n' +
+          "║    DEFAULT 'customer'                                       ║\n" +
+          "║    CHECK (role IN ('customer','admin','superadmin'));        ║\n" +
+          '║                                                            ║\n' +
+          "║  UPDATE members SET role = 'admin'                          ║\n" +
+          "║    WHERE email = '<YOUR_EMAIL>';                             ║\n" +
+          '╚══════════════════════════════════════════════════════════════╝'
       );
     } else {
       migrationDone = true;
@@ -326,7 +323,6 @@ export async function updatePaymentStatus({ orderId, billingAddress, paymentStat
 
     if (error) throw new Error(error.message);
   }
-
 }
 
 export async function getOrderItemsByOrderId(orderId) {

@@ -77,10 +77,7 @@ export default function CartList({ cartData }) {
   console.log('selected Pokemon: ', selectedPokemons);
 
   return (
-    <div
-      ref={containerViewCheckPort}
-      className="flex flex-col space-y-2.5"
-    >
+    <div ref={containerViewCheckPort} className="flex flex-col space-y-2.5">
       <AnimatePresence>
         {selectedPokemons.map((selectedPokemon) => (
           <motion.div

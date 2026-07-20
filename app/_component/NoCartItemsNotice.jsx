@@ -1,29 +1,22 @@
 'use client';
 
-import Button from '@mui/material/Button';
 import { useRouter } from 'next/navigation';
 
 export default function NoCartItemsNotice() {
   const router = useRouter();
 
   return (
-    <div className="bg-primary-600 flex flex-col items-center justify-center w-full min-h-[86vh] p-6">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold text-primary-100 mb-4 max-w-md mx-auto">
-          Oops! Your cart is empty right now. Let's go shopping! 🛒✨
-        </h1>
-        <p className="text-lg text-primary-100 mb-8">
-          Discover amazing items waiting just for you.
-        </p>
-        <Button
-          variant="contained"
-          color="primary"
-          startIcon={<i className="pi pi-arrow-left" style={{ fontSize: '1.5rem' }} />}
+    <div className="flex-1 flex items-center justify-center w-full h-full bg-gray-50">
+      <div className="text-center max-w-md mx-auto px-6">
+        <div className="text-7xl mb-6">🛒✨</div>
+        <h1 className="text-3xl font-bold text-gray-900 mb-3">Your cart is empty</h1>
+        <p className="text-gray-500 mb-8 text-lg">Discover amazing Pokémon waiting just for you.</p>
+        <button
           onClick={() => router.push('/shop')}
-          className="rounded-full px-6 py-3 shadow-md hover:shadow-lg transition-shadow duration-300"
+          className="inline-flex items-center gap-2 bg-indigo-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-indigo-700 transition-colors"
         >
-          Back to Shop
-        </Button>
+          ← Browse Shop
+        </button>
       </div>
     </div>
   );

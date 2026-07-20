@@ -1,7 +1,6 @@
 import PokemonDetails from '../../_component/PokemonDetails';
 import { getCartItems, getPokemonById } from '../../_lib/data-service';
 
-
 export const dynamic = 'force-dynamic';
 export const dynamicParams = false;
 
@@ -13,7 +12,6 @@ export async function generateMetadata(props) {
 
   return { title: `${name}` };
 }
-
 
 export default async function Page(props) {
   const params = await props.params;

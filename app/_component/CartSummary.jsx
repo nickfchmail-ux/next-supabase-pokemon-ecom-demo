@@ -28,9 +28,13 @@ export default function CartSummary({ user }) {
   if (!pokemonList || pokemonList.length === 0) return <Loading />;
 
   const cartMap = {};
-  cartItems.forEach((item) => { cartMap[item.id] = item.quantity; });
+  cartItems.forEach((item) => {
+    cartMap[item.id] = item.quantity;
+  });
 
-  let totalRegularPrice = 0, totalDiscountSavings = 0, billingAmount = 0;
+  let totalRegularPrice = 0,
+    totalDiscountSavings = 0,
+    billingAmount = 0;
 
   pokemonList.forEach((pokemon) => {
     const qty = cartMap[pokemon.id] || 0;
@@ -39,7 +43,7 @@ export default function CartSummary({ user }) {
     const discount = pokemon.pokemons_selling.discount;
     totalRegularPrice += price * qty;
     totalDiscountSavings += (price * qty * discount) / 100;
-    billingAmount += (price * qty * (1 - discount / 100));
+    billingAmount += price * qty * (1 - discount / 100);
   });
 
   if (cartItems.length === 0) return null;
