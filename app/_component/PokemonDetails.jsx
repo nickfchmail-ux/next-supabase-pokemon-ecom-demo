@@ -246,6 +246,36 @@ export default function PokemonDetails({ selectedPokemon, cartData }) {
               </div>
             </div>
 
+            {/* Base Stats */}
+            {selectedPokemon?.hp != null && (
+              <div className="mb-6">
+                <p className="text-xs font-medium text-gray-400 uppercase tracking-wider mb-3">Base Stats</p>
+                <div className="grid grid-cols-2 gap-2">
+                  {([
+                    { label: 'HP', value: selectedPokemon.hp, color: '#EF4444' },
+                    { label: 'Attack', value: selectedPokemon.attack, color: '#F59E0B' },
+                    { label: 'Defense', value: selectedPokemon.defense, color: '#3B82F6' },
+                    { label: 'Sp. Atk', value: selectedPokemon.special_attack, color: '#8B5CF6' },
+                    { label: 'Sp. Def', value: selectedPokemon.special_defense, color: '#10B981' },
+                    { label: 'Speed', value: selectedPokemon.speed, color: '#EC4899' },
+                  ]).map((stat) => (
+                    <div key={stat.label} className="flex items-center gap-2 px-2 py-1.5 rounded-lg bg-white/50">
+                      <span className="text-xs font-semibold text-gray-500 w-14">{stat.label}</span>
+                      <div className="flex-1 h-1.5 bg-gray-200 rounded-full overflow-hidden">
+                        <div className="h-full rounded-full transition-all" style={{ width: `${Math.min(100, (stat.value / 255) * 100)}%`, backgroundColor: stat.color }} />
+                      </div>
+                      <span className="text-xs font-semibold text-gray-700 w-7 text-right">{stat.value}</span>
+                    </div>
+                  ))}
+                </div>
+                <div className="mt-2 text-center">
+                  <span className="text-xs font-semibold text-gray-700">
+                    Total: {[selectedPokemon.hp, selectedPokemon.attack, selectedPokemon.defense, selectedPokemon.special_attack, selectedPokemon.special_defense, selectedPokemon.speed].reduce((a, b) => a + b, 0)}
+                  </span>
+                </div>
+              </div>
+            )}
+
             {/* Divider */}
             <div className="border-t border-gray-100 pt-6">
               <h2 className="text-sm font-semibold text-gray-900 uppercase tracking-wider mb-3">
